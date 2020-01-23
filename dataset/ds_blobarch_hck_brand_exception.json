@@ -1,0 +1,30 @@
+{
+	"name": "ds_blobarch_hck_brand_exception",
+	"properties": {
+		"description": "Filename: VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt ",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt",
+			"folderPath": {
+				"value": "rbhealtharchive/hck ",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

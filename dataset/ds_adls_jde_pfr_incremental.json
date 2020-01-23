@@ -1,0 +1,25 @@
+{
+	"name": "ds_adls_jde_pfr_incremental",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_weu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "\t",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "PFR_JDE_Incremental_file",
+			"folderPath": "/rbhealth/landing/supply_incremental/jde_source"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

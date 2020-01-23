@@ -1,0 +1,24 @@
+{
+	"name": "ds_adls_sap_pfr_incremental",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_weu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "\t",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "PFR_SAP_Incremental_file",
+			"folderPath": "/rbhealth/landing/supply_incremental/sap_source"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

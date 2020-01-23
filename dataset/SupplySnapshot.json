@@ -1,0 +1,19 @@
+{
+	"name": "SupplySnapshot",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SupplySnapshot",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"fileName": "",
+			"folderPath": {
+				"value": "@concat('rbhealth/archive/processed_snapshots/supply/',formatDateTime(utcnow(),'yyyyMMddhhmm'))",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

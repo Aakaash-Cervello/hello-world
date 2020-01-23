@@ -1,0 +1,129 @@
+{
+	"name": "adf_svp_rbsales_load",
+	"properties": {
+		"description": "Pipeline that loads RB Sales file that arrives on the 8th business day of the month, containing data for prior month. ",
+		"activities": [
+			{
+				"name": "sp_f_rb_sales_report",
+				"description": "Stored procedure that moves data from [svp].[stg_f_rb_sales_report] to [svp].[f_rb_sales_report]",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sp_stg_f_rb_sales_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[svp].[sp_f_rb_sales_report]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Notify Success-RBSalesReport Load",
+				"description": "Notify Successful completion of  SVP RB Sales report data",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_f_rb_sales_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Executed Succesfully"
+					}
+				}
+			},
+			{
+				"name": "Notify Failure RBSalesReport load",
+				"description": "Notify Failure of SVP loads process",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_f_rb_sales_report",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Execution FAILED"
+					}
+				}
+			},
+			{
+				"name": "sp_stg_f_rb_sales_report",
+				"description": "Stored procedure that copies data from [hck].[v_svp_rb_sales_report] to [svp].[stg_f_rb_sales_report]",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[svp].[sp_stg_f_rb_sales_report]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"EmailTo": {
+				"type": "String",
+				"defaultValue": "abalachandran@mycervello.com"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

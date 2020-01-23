@@ -1,0 +1,20 @@
+{
+	"name": "ls_pulse_sftp",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "SFTP server where files are initially stored",
+		"type": "Sftp",
+		"typeProperties": {
+			"host": "uksazpvirlpul-001.uksouth.cloudapp.azure.com",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "rbpulsesftp",
+			"password": {
+				"type": "SecureString",
+				"value": "**********"
+			}
+		},
+		"annotations": []
+	}
+}

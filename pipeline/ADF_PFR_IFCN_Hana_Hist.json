@@ -1,0 +1,48 @@
+{
+	"name": "ADF_PFR_IFCN_Hana_Hist",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RelationalSource",
+						"query": "\nSELECT\n\"SALESORDER_CREATED_ON_DATE\",\n\t \"INVOICE_DATE\",\n\t \"CANCELLATION_DATE\",\n\t \"PFR_CALENDAR_WEEK\",\n\t \"RB_AREA\",\n\t \"RB_AREA_DESC\",\n\t \"RB_REGION\",\n\t \"RB_REGION_DESC\",\n\t \"RB_MARKET\",\n\t \"RB_MARKET_DESC\",\n\t \"COUNTRY\",\n\t \"MATERIAL\",\n\t \"MATERIAL_DESC\",\n\t \"BRAND\",\n\t \"BRAND_DESC\",\n\t \"CATEGORY\",\n\t \"CATEGORY_DESC\",\n\t \"SEGMENT\",\n\t \"SEGMENT_DESC\",\n\t  \"COMBINED_RFR\"  \"REASON_FOR_REJECTION\", -- CR 20190315\n\t \"REASON_FOR_REJECTION_DESC\",\n\t (case when \"MANUFACTOR\" = '' then \"PLANT\" else \"MANUFACTOR\" end)  as \"Plant\", -- Plant is replaced with MANUFACTOR 22nd May 2019--CHG0033586 13th sep 2019\n\t \"MANUFACTOR_TEXT\" as \"Plant_Desc\", -- Plant_Desc is replaced with MANUFACTOR 22nd May 2019\n\t \"SHIPTO_CUSTOMER\",\n\t \"SHIPTO_CUSTOMER_DESC\",\n\t \"BILLTO_PARTY\",\n\t \"BILLTO_PARTY_DESC\",\n\t \"H2_MJ_REGIONAL_CUSTOMER\",\n\t \"H2_MJ_REGIONAL_CUSTOMER_DESC\",\n\t \"SALESORDER_DOCUMENT\",\n\t \"SALESORDER_ITEM\",\n\t \"SALESDOC_TYPE\",\n\t \"OVERALL_PROCESSING\",\n\t null  \"BILLING_DOCUMENT_NUMBER\",  -- CR 20190315\n\t null  \"BILLING_TYPE\",             -- CR 20190315\n\t sum(\"ORDQTY_PFR1\") AS \"ORDQTY_PFR1\",\n\t sum(\"CUTQTY_PFR1\") AS \"CUTQTY_PFR1\",\n\t sum(\"ORDQTY_PFR2\") AS \"ORDQTY_PFR2\",\n\t sum(\"CUTQTY_PFR2\") AS \"CUTQTY_PFR2\",\n\t sum(\"ORDER_QTY\") AS \"ORDER_QTY\",\n\t sum(\"CUT_QTY\") AS \"CUT_QTY\",\n\t sum(\"INVOICE_QTY\") AS \"INVOICE_QTY\" \nFROM \"_SYS_BIC\".\"ZMJNRB_ADF_OTC.ZPFR/CV_OTC_PFR_02\"   -- CR 20190315\n where  \"PFR_CALENDAR_WEEK\" not like '%000000%'\nGROUP BY \"SALESORDER_CREATED_ON_DATE\",\n\t \"INVOICE_DATE\",\n\t \"CANCELLATION_DATE\",\n\t \"PFR_CALENDAR_WEEK\",\n\t \"RB_AREA\",\n\t \"RB_AREA_DESC\",\n\t \"RB_REGION\",\n\t \"RB_REGION_DESC\",\n\t \"RB_MARKET\",\n\t \"RB_MARKET_DESC\",\n\t \"COUNTRY\",\n\t \"MATERIAL\",\n\t \"MATERIAL_DESC\",\n\t \"BRAND\",\n\t \"BRAND_DESC\",\n\t \"CATEGORY\",\n\t \"CATEGORY_DESC\",\n\t \"SEGMENT\",\n\t \"SEGMENT_DESC\",\n\t /*\"REASON_FOR_REJECTION\",*/     -- CR 20190315\n\t  \"COMBINED_RFR\" ,                -- CR 20190315\n\t \"REASON_FOR_REJECTION_DESC\",\n\t  (case when \"MANUFACTOR\" = '' then \"PLANT\" else \"MANUFACTOR\" end)  , -- Plant is replaced with MANUFACTOR 22nd May 2019----CHG0033586 13th sep 2019\n\t \"MANUFACTOR_TEXT\", -- Plant is replaced with MANUFACTOR 22nd May 2019\n\t \"SHIPTO_CUSTOMER\",\n\t \"SHIPTO_CUSTOMER_DESC\",\n\t \"BILLTO_PARTY\",\n\t \"BILLTO_PARTY_DESC\",\n\t \"H2_MJ_REGIONAL_CUSTOMER\",\n\t \"H2_MJ_REGIONAL_CUSTOMER_DESC\",\n\t \"SALESORDER_DOCUMENT\",\n\t \"SALESORDER_ITEM\",\n\t \"SALESDOC_TYPE\",\n\t \"OVERALL_PROCESSING\"--,\n\t/* \"BILLING_DOCUMENT_NUMBER\", --  CR 20190315\n\t \"BILLING_TYPE\"*/"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sap_hana_pfr_ifcn",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls_ifcn_pfr",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PFR DataPipelines"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

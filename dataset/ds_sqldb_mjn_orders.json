@@ -1,0 +1,82 @@
+{
+	"name": "ds_sqldb_mjn_orders",
+	"properties": {
+		"description": "Dataset for SQL DB staging table for MJN Orders",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Data_load_date",
+				"type": "String"
+			},
+			{
+				"name": "Calendar_Day",
+				"type": "String"
+			},
+			{
+				"name": "Calendar_Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY_NAME",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT_CENTER",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT_CENTER_NAME",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_NAME",
+				"type": "String"
+			},
+			{
+				"name": "LOC_CURR",
+				"type": "String"
+			},
+			{
+				"name": "NEW_ORDER_VALUE_LC",
+				"type": "Double"
+			},
+			{
+				"name": "NEW_ORDER_NET_VALUE_LC",
+				"type": "Double"
+			},
+			{
+				"name": "PENDING_ORDER_VALUE_LC",
+				"type": "Double"
+			},
+			{
+				"name": "PENDING_NET_ORDER_VALUE_LC",
+				"type": "Double"
+			},
+			{
+				"name": "PENDING_ORDERS_DUE_PRCUR_MO_LC",
+				"type": "Double"
+			},
+			{
+				"name": "PENDING_ORDERS_DUE_NET_VALUE_PRCUR_MO_LC",
+				"type": "Double"
+			}
+		],
+		"typeProperties": {
+			"tableName": "sales.stg_f_orders_load"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

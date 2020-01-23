@@ -1,0 +1,72 @@
+{
+	"name": "adf_cegedim_create_persistent_tables",
+	"properties": {
+		"activities": [
+			{
+				"name": "Create Tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[execution].[usp_create_persistent_tables]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_sqldw_weu_pharma",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "CopyTransferOrdersToExodusBlob",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Create Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_copy_transorder_SQL_ADLS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "CopyTransferOrdersToExodusADLS_Fusion",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "CopyTransferOrdersToExodusBlob",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_copy_transorder_SQL_ADLS_Fusion",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,233 @@
+{
+	"name": "adf_cegedim_hive_create_tables",
+	"properties": {
+		"activities": [
+			{
+				"name": "Create Execution DB",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/create/create_execution_database.hql",
+					"getDebugInfo": "Always",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Create Landing Tables",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Create Execution DB",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/create/create_execution_landing_tables.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"adlname": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Create Stg Tables",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Create Landing Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/create/create_execution_staging_tables.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"adlname": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Create Target Tables",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Create Stg Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/create/create_execution_target_tables.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"adlname": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Create Pivots",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Create Target Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/create/create_execution_processed_pivot_tables.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"adlname": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Create AAS Partition Table",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Create Pivots",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/create/create_aas_refresh_partitions.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"adlname": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"AdlName": {
+				"type": "String",
+				"defaultValue": "weuazpviradlspul01"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,309 @@
+{
+	"name": "adf_rbsales_load",
+	"properties": {
+		"description": "Pipeline that loads the RB sales files from SFTP:\nPipeline to load MJN data (copa, bpc, orders). It performs the following actions:\n1. Copy RB files from SFTP to Blob Staging and Archives the files in Blob Archive\n2. Runs stored procedure to truncate temp_staging\n3. Copy RB files from Blob Staging to Azure SQL Database\n4. Execute stored procedure to move data from SQL DB Staging to SQL DB Target\n",
+		"activities": [
+			{
+				"name": "copy_sftpblob_rbsales",
+				"description": "Copy RB Sales data from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "MergeFiles"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_rb_sales",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_rb_sales",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblobarch_rb_sales",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_rbsales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_rb_sales",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_sales_rbsales",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "sp_sql_temp_truncate_rbsales",
+				"description": "Truncate Temp table for RB sales data.",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_rbsales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "sales.sp_rbsales_staging_truncate"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sp_sql_sales_merge",
+				"description": "Stored procedure that combines MJN and RB sales data into a unified data model.",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_rbsales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[sales].[sp_f_sales_tomerge]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "copy_blobsql_rbsales",
+				"description": "Copy RBSalesdata from Blob staging to SQL staging table",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_temp_truncate_rbsales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Year": "Year",
+							"Month_Of_Year": "Month_of_Year",
+							"Day_Of_Month": "Day_of_Month",
+							"Brand_Code": "Brand_Code",
+							"Brand_Name": "Brand_Name",
+							"Legal_Entity_Group_Code": "Legal_Entity_Group_Code",
+							"Management_Entity_Code": "Management_Entity_Code",
+							"Currency_Code": "Currency_Code",
+							"Gross_Sales_3P": "Gross_Sales_3P",
+							"Gross_Sales_Latest_Estimate": "Gross_Sales_Latest_Estimate",
+							"Net_Revenue_3P": "Net_Revenue_3P",
+							"Net_Revenue_Latest_Estimate": "Net_Revenue_Latest_Estimate",
+							"Total_Open_Order_Amount_by_Promised_Shipment_Date": "Total_Open_Order_Amount_by_Promised_Shipment_Date",
+							"Total_Open_Order_Amount_by_Promised_Delivery_Date": "Total_Open_Order_Amount_by_Promised_Delivery_Date"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_rb_sales",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_rb_sales",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "adf_delete_sftp_rbsales",
+				"description": "Triggers the Logic App to delete the RB Sales files from SFTP: rbpulse_delete_sftp_rbsales",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblobarch_rb_sales",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-01.uksouth.logic.azure.com:443/workflows/0a0bfa1d409446b794c16e0b9f3744f1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=R31wsCJq4-w1UwuV5ohwJIAzOG3oHdrFUHvlhY40z-g",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "/home/data/pulse/rbsales"
+					}
+				}
+			},
+			{
+				"name": "Notify Success",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_sales_merge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Executed Succesfully"
+					}
+				}
+			},
+			{
+				"name": "Notify Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_sales_merge",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Execution FAILED"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"EmailTo": {
+				"type": "String",
+				"defaultValue": "RBHealthDailySales@mycervello.com"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

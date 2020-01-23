@@ -1,0 +1,78 @@
+{
+	"name": "ds_sftp_mjn_bpc",
+	"properties": {
+		"description": "MJN BPC file that is present in the SFTP location",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "DATA LOAD DATE (UTC)",
+				"type": "String"
+			},
+			{
+				"name": "CALENDAR YEAR/MONTH",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY CODE",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY NAME",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT CENTER",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT CENTER NAME",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "BRAND NAME",
+				"type": "String"
+			},
+			{
+				"name": "LOC CURR",
+				"type": "String"
+			},
+			{
+				"name": "BPC Y PROJ(LC)",
+				"type": "String"
+			},
+			{
+				"name": "NET SALES BPC Y PROJ(LC)",
+				"type": "String"
+			},
+			{
+				"name": "BPC Y BUDGET(LC)",
+				"type": "String"
+			},
+			{
+				"name": "NET SALES BPC Y BUDGET(LC)",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "\n",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"folderPath": "/home/data/mjn",
+			"fileFilter": "bpc*"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

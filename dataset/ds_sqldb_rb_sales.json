@@ -1,0 +1,74 @@
+{
+	"name": "ds_sqldb_rb_sales",
+	"properties": {
+		"description": "Dataset for SQL DB staging table for RB Sales",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Month_of_Year",
+				"type": "String"
+			},
+			{
+				"name": "Day_of_Month",
+				"type": "String"
+			},
+			{
+				"name": "Brand_Code",
+				"type": "String"
+			},
+			{
+				"name": "Brand_Name",
+				"type": "String"
+			},
+			{
+				"name": "Legal_Entity_Group_Code",
+				"type": "String"
+			},
+			{
+				"name": "Management_Entity_Code",
+				"type": "String"
+			},
+			{
+				"name": "Currency_Code",
+				"type": "String"
+			},
+			{
+				"name": "Gross_Sales_3P",
+				"type": "Double"
+			},
+			{
+				"name": "Gross_Sales_Latest_Estimate",
+				"type": "Double"
+			},
+			{
+				"name": "Net_Revenue_3P",
+				"type": "Double"
+			},
+			{
+				"name": "Net_Revenue_Latest_Estimate",
+				"type": "Double"
+			},
+			{
+				"name": "Total_Open_Order_Amount_by_Promised_Shipment_Date",
+				"type": "Double"
+			},
+			{
+				"name": "Total_Open_Order_Amount_by_Promised_Delivery_Date",
+				"type": "Double"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[sales].[stg_f_rb_sales_load]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

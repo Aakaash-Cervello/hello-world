@@ -1,0 +1,90 @@
+{
+	"name": "ds_sftp_mjn_orders",
+	"properties": {
+		"description": "MJN Orders file that is present in the SFTP location",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "DATA LOAD DATE (UTC)",
+				"type": "String"
+			},
+			{
+				"name": "CALENDAR DAY",
+				"type": "String"
+			},
+			{
+				"name": "CALENDAR YEAR/MONTH",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY CODE",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY NAME",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT CENTER",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT CENTER NAME",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "BRAND NAME",
+				"type": "String"
+			},
+			{
+				"name": "LOC CURR",
+				"type": "String"
+			},
+			{
+				"name": "NEW ORDER VALUE (LC)",
+				"type": "String"
+			},
+			{
+				"name": "NEW ORDER NET VALUE (LC)",
+				"type": "String"
+			},
+			{
+				"name": "PENDING ORDER VALUE (LC)",
+				"type": "String"
+			},
+			{
+				"name": "PENDING NET ORDER VALUE (LC)",
+				"type": "String"
+			},
+			{
+				"name": "PENDING ORDERS DUE PRCUR MO (LC)",
+				"type": "String"
+			},
+			{
+				"name": "PENDING ORDERS DUE NET VALUE PRCUR MO (LC)",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "\n",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"folderPath": "/home/data/mjn",
+			"fileFilter": "orders*"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

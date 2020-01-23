@@ -1,0 +1,16 @@
+{
+	"name": "ls_rbpultestrbnedls02",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://rbpultestrbnedls02.azuredatalakestore.net/webhdfs/v1",
+			"servicePrincipalId": "d8851fb1-44b9-4e04-a7e9-5d66bdb7ebae",
+			"tenant": "95e66ecc-f2c2-464b-84d9-8fda407bc923",
+			"subscriptionId": "43a112d4-7a72-4699-ae53-9ba0f59bb2eb",
+			"resourceGroupName": "EXODUS-QA-RG",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIldFVUFaUFZJUkRGUFVMMDAxX2VhNDI0MTFkLWI5MTEtNGRiYi1hZjRhLTkyOWY0Mjg5NmZkMSINCn0="
+		}
+	}
+}

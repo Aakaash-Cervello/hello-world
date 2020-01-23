@@ -1,0 +1,96 @@
+{
+	"name": "adf_supply_staging_fact",
+	"properties": {
+		"activities": [
+			{
+				"name": "create staging pfr fact and insert jde",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_f_pfr_fact_jde_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging pfr sap",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "create staging pfr fact and insert jde",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/staging_f_pfr_fact_SAP.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging pfr ifcn",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging pfr sap",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/staging_f_pfr_fact_IFCN.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

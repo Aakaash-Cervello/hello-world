@@ -1,0 +1,366 @@
+{
+	"name": "adf_supply_landing",
+	"properties": {
+		"activities": [
+			{
+				"name": "dim_Country_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Country.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_Customer_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Customer.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_invoice_type_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Invoice_Type.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_Order_status_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Order_Status.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_order_type_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Order_Type.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_product_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Product.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_reason_code_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Reason_Code.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_Supply_location_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_Source_Location.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "dim_calendar_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_d_calendar.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "fact_pfr_jde_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_PFR_JDE.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "fact_pfr_sap_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_PFR_SAP.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "fact_pfr_ifcn_landing_file",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "dim_reason_code_landing_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Landing/landing_PFR_IFCN.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,85 @@
+{
+	"name": "adf_supply_master_automated_inc",
+	"properties": {
+		"activities": [
+			{
+				"name": "jde_extract_inc",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ADF_PFR_JDE_Incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "sap_extract_inc",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "jde_extract_inc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ADF_PFR_SAP_Incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "supply_master_load_inc",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ifcn_extract_inc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_master_inc",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "ifcn_extract_inc",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "sap_extract_inc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ADF_PFR_IFCN_Hana_Incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "supply_incremental"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

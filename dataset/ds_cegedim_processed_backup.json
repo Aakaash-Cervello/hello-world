@@ -1,0 +1,24 @@
+{
+	"name": "ds_cegedim_processed_backup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_weu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"folderPath": "rbhealth/backup/cegedim"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

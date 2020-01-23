@@ -1,0 +1,53 @@
+{
+	"name": "ds_sqldb_hck_brand_hier",
+	"properties": {
+		"description": "VW_BC_LKPAWS_LKPAWSBRANDHIER.txt",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "PARENT",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_HIER_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_HIER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "LEVEL",
+				"type": "Int32"
+			},
+			{
+				"name": "ORDER",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "Int32"
+			},
+			{
+				"name": "SECTOR",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_d_brand_hier"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

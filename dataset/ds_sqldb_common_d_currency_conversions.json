@@ -1,0 +1,18 @@
+{
+	"name": "ds_sqldb_common_d_currency_conversions",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "rbone_hhck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[common].[d_currency_conversions]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

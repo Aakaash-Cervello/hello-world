@@ -1,0 +1,22 @@
+{
+	"name": "ds_adls_ceg_cycle_landing",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_weu",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"fileName": "",
+			"folderPath": {
+				"value": "rbhealth/api_landing/cegedim/rb_execution_cycle_dim/@{pipeline().parameters.market}",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

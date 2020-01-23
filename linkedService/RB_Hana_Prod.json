@@ -1,0 +1,19 @@
+{
+	"name": "RB_Hana_Prod",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Link To RB SAP Hana Prod system",
+		"annotations": [],
+		"type": "SapHana",
+		"typeProperties": {
+			"server": "10.118.44.62:30015",
+			"authenticationType": "Basic",
+			"userName": "Pulse_1",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlMWFkN2U5NC0yOWUyLTRiNTYtOWRlOS1lNzU2YTYwZGE3NTYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IntegrationRuntime-SelfHosted-1fl",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

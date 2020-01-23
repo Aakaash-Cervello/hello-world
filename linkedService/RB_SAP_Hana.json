@@ -1,0 +1,18 @@
+{
+	"name": "RB_SAP_Hana",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SapHana",
+		"typeProperties": {
+			"server": "10.118.44.62",
+			"authenticationType": "Basic",
+			"userName": "Pulse_1",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiZjUxZWQzYS0xMDlhLTRjZjYtOTAyNi0xYzUwMzExM2Q0MjYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IntegrationRuntime-SelfHosted-1fl",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

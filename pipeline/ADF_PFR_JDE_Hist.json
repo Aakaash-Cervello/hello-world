@@ -1,0 +1,48 @@
+{
+	"name": "ADF_PFR_JDE_Hist",
+	"properties": {
+		"description": "Pipleine to load history data from RB SAP hana",
+		"activities": [
+			{
+				"name": "CPY_PFR_JDE",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RelationalSource",
+						"query": "\nSELECT\nZ_PRCLINE AS Lines,\n\"0CALWEEK\" AS Calendar_year_week,\nZLOBCNTRY AS PFR_Country,\nZLOBCNTRY__ZAREA AS Geographical_Area,\nZLOBCNTRY__ZMARKET AS Geographical_Market,\nZLOBCNTRY__ZREGION AS Geographical_Region,\nZ_PBUSUNT AS Business_Unit,\nZ_PSUPFCP AS Supplying_factory_Primary,\nZ_PSFPDSC AS Supplying_factory_Description_Primary,\nZ_PSUPFCS AS Supplying_factory_Secondary,\nZ_PSFSDSC AS Supplying_factory_Description_Secondary,\nZ_PORDCC AS Order_Company_CC,\nZ_PORDTYP AS Order_Type,\nZ_PLSTSCD AS Last_Status_Code,\nZ_PLRESCD AS Local_Reason_Code,\nZ_PRCGLBL AS Global_Reason_Code,\nZ_PRCGLBL__Z_PRCGRP AS Reason_Code_Group,\nZ_PNXTSCD AS Next_Status_Code,\nZ_PINVNUM AS Invoice_Number,\nZ_PINVTYP AS Invoice_Type,\nZ_PSHTO AS Shipment_ID,\nZ_PBILTO AS Bill_To,\nZ_PLANTO AS Plan_To,\nZ_PLANTO__Z_PLAN_TO AS Plan_to_Z,\nZ_PCUSLL1 AS Cust_Local_Level1,\nZ_PCUSLL2 AS Cust_Local_Level2,\nZ_PCUSLL3 AS Cust_Local_Level3,\nZ_PCUSLL4 AS Cust_Local_Level4,\nZ_PCUSLL5 AS Cust_Local_Level5,\nZ_PCUSLL6 AS Cust_Local_Level6,\nZ_PINTACC AS International_Account_Code,\nZ_PBILTOD AS Bill_To_Description,\nZ_PSHTOD AS Ship_To_Description,\nZ_PLANTOD AS Plan_To_Description,\n\"0BASE_UOM\" AS Base_Unit_of_Measure,\n\"0CURRENCY\" AS Currency_key,\nZ_PLINTYP AS Line_Type,\nZ_PYEAR AS Year,\nZ_PACTSDT AS Actual_Ship_Date,\nZ_PCNCLDT AS Cancel_Date,\nZ_PCULL1D AS Cust_Local_Level1_Desc,\nZ_PCULL2D AS Cust_Local_Level2_Desc,\nZ_PCULL3D AS Cust_Local_Level3_Desc,\nZ_PCULL4D AS Cust_Local_Level4_Desc,\nZ_PCULL5D AS Cust_Local_Level5_Desc,\nZ_PCULL6D AS Cust_Local_Level6_Desc,\nZ_PINCHKD AS Integrity_Check_Description,\nZCALWEEK AS Calweek,\nZ_ORDUOM AS Order_Line_UoM,\nZ_PHBUSUN AS Header_Business_Unit,\nZ_PORDDT AS Order_Date, \nZ_PREQDT AS Requested_Date,\nZ_JLINTYP AS JDE_Line_Type, \nZ_PLINID AS Line_Number,\nZ_PORDNUM AS Order_Number,\nZ_JDEINT AS JDE_Instance,  \nZ_PITEM AS PFR_Item,\nZ_PITEM__0MATL_TYPE AS Material_Type_SAP,\nZ_PITEM__ZBRAND AS Brand_SAP,\nZ_PITEM__Z_PBRAND AS Brand_JDE,\nZ_PITEM__Z_PCATGRY AS Category,\nZ_PITEM__Z_PITMCLS AS Item_Class,\nZ_PITEM__Z_PITMNO2 AS Item_Number_2nd,\n                \"Z_PITEM__Z_PITMNO3\" AS Item_Number_3rd,\nZ_PITEM__Z_PLCSTRL AS Landed_Cost_Rule,\nZ_PITEM__Z_PLSTSNO AS Primary_Last_Supplier_Number,\nZ_PITEM__Z_PMPLFAM AS Master_Planning_Family,\nZ_PITEM__Z_PPCKDET AS Package_Detail,\nZ_PITEM__Z_PPLANCD AS Planning_Code,\nZ_PITEM__Z_PPRDFRM AS Product_Form,\nZ_PITEM__Z_PRFLFLG AS Refill_Flag,\nZ_PITEM__Z_PSECTOR AS Sector,\nZ_PITEM__Z_PSEGMNT AS Segment,\nZ_PITEM__Z_PSPRDCD AS Standard_Product_Code,\nZ_PITEM__Z_PSTKTYP AS Stocking_Type,\nZ_PITEM__Z_PVARNT AS Variant,\nZ_PITMNO1 AS Item_Number_Short,\nZ_PSKUCD AS SKU_Code_Desc,\nZ_OBUSUNT AS Original_Business_Unit,\nZ_PRCUOM AS Pricing_UoM,\nZ_PLAN_TO AS Harmonised_Plan_to,\n--\"Z_COUNTRY_description\" AS PFR_Country_Desc,\n--\"Z_COUNTRY__ZAREA_description\" AS Geographical_Area_Desc,\n--\"Z_COUNTRY__ZREGION_description\" AS Geographical_Region_Desc,\n\"Z_PLSTSCD_description\" AS Last_Status_Code_Desc,\n\"Z_PLRESCD_description\" AS Local_Reason_Code_Desc,\n\"Z_PRCGLBL_description\" AS Global_Reason_Code_Desc,\n\"Z_PNXTSCD_description\" AS Next_Status_Code_Desc,\n\"Z_PSHTO_description\" AS Shipment_ID_Desc,\n\"Z_PBILTO_description\" AS Bill_To_Desc,\n\"Z_PLANTO__Z_PLAN_TO_description\" AS Plan_to_Z_Desc,\n--\"0CURRENCY_description\" AS Currency_Desc,\n\"0CURRENCY\" AS Currency_Desc,\n\"Z_JDEINT_description\" AS  JDE_Instance_Desc,\n\"Z_PITEM_description\" AS PFR_Item_Desc ,\n\"Z_PITEM__0MATL_TYPE_description\" AS Material_Type_SAP_Desc,\n\"Z_PITEM__ZBRAND_description\" AS Brand_SAP_Desc,\n\"Z_PITEM__Z_PBRAND_description\" AS Brand_JDE_Desc,\n\"Z_PITEM__Z_PCATGRY_description\" AS Category_Desc,\n\"Z_PITEM__Z_PITMCLS_description\" AS Item_Class_Desc,\n\"Z_PITEM__Z_PLCSTRL_description\" AS Landed_Cost_Rule_Desc,\n\"Z_PITEM__Z_PMPLFAM_description\" AS Master_Planning_Family_Desc,\n\"Z_PITEM__Z_PPCKDET_description\" AS Package_Detail_Desc,\n\"Z_PITEM__Z_PRFLFLG_description\" AS Refill_Flag_Desc,\n\"Z_PITEM__Z_PSEGMNT_description\" AS Segment_Desc,\n\"Z_PITEM__Z_PSPRDCD_description\" AS Standard_Product_Code_Desc,\n\"Z_PITEM__Z_PSTKTYP_description\" AS Stocking_Type_Desc,\n\"Z_PITEM__Z_PVARNT_description\" AS Variant_Desc,\nZ_OORDQTY AS Orig_Ordered_Qty,\nZ_OSHPQTY AS Orig_Shipped_Qty,\nZ_OCNLQTY AS Orig_Cancelled_Qty,\nZ_OBCKQTY AS Orig_Backordered_Qty,\nZ_OOPNQTY AS Orig_Open_Qty,\nZ_PORDQTY AS Quantity_Ordered,\nZ_PSHQTY AS Quantity_Shipped,\nZ_PCNCQTY AS Quantity_Canceled,\nZ_PBCKQTY AS Quantity_Backordered,\nZ_POPNQTY AS Quantity_Open,\nZ_PUNTLPR AS Unit_List_Price,\nZ_PUNTPR AS Unit_Price,\nZ_PEXTPR AS Extended_Price,\nZ_PUNTCST AS Unit_Cost,\nZ_PEXTCST AS Extended_Cost,\nZ_RORQP1 AS Reported_Ordered_Qty_PFR1,\nZ_RCQP1 AS Reported_Cancelled_Qty_PFR1,\nZ_ROQP1 AS Reported_Opened_Qty_PFR1,\nZ_RORQP2C AS Reported_Ordered_Qty_PFR2_CP,\nZ_RCQP2CP AS Reported_Cancelled_Qty_PFR2_CP,\nZ_ROQP2CP AS Reported_Opened_Qty_PFR2_CP,\nZ_RORQP2P AS Reported_Ordered_Qty_PFR2_PO,\nZ_RCQP2PO AS Reported_Cancelled_Qty_PFR2_PO,\nZ_ROQP2PO AS Reported_Opened_Qty_PFR2_PO \nFROM \"_SYS_BIC\".\"CSR.JDE_PFR/CV_ZPFRC1\" \nWHERE \n--Z_COUNTRY ='#COUNTRY#'\n--AND \nZELOB = 'HEA' AND\n\"0CALWEEK\" >= 201701"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sap_hana_pfr_rb",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls_jde_pfr",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PFR DataPipelines"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

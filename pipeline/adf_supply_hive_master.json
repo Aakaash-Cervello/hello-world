@@ -1,0 +1,85 @@
+{
+	"name": "adf_supply_hive_master",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load Landing data",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_landing",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load staging dimensions",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load Landing data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_staging_dimensions",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load staging fact",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load staging dimensions",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_staging_fact",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load target",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load staging fact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_target",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,227 @@
+{
+	"name": "adf_cegedim_full_load_RouteAuditFacts",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy from SFTP",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_sftp_to_api_landing",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"market": {
+							"value": "@pipeline().parameters.Market",
+							"type": "Expression"
+						},
+						"SFTPMarketCode": {
+							"value": "@pipeline().parameters.SFTPMarketCode",
+							"type": "Expression"
+						},
+						"SFTPFolderPath": {
+							"value": "@pipeline().parameters.SFTPFolderPath",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Archive Files",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Full Load Hive Route Audit Facts",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_archive_full_files_adl",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"functionURL": {
+							"value": "@pipeline().parameters.ADLFunctionURL",
+							"type": "Expression"
+						},
+						"market": {
+							"value": "@pipeline().parameters.Market",
+							"type": "Expression"
+						},
+						"tenant": {
+							"value": "@pipeline().parameters.Tenant",
+							"type": "Expression"
+						},
+						"clientId": {
+							"value": "@pipeline().parameters.ClientId",
+							"type": "Expression"
+						},
+						"clientSecret": {
+							"value": "@pipeline().parameters.ClientSecret",
+							"type": "Expression"
+						},
+						"adlAccountName": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						},
+						"MarketCode": {
+							"value": "@pipeline().parameters.SFTPMarketCode",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Full Load Hive Route Audit Facts",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Copy from SFTP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_hive_full_RouteAuditFacts",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"market": {
+							"value": "@pipeline().parameters.Market",
+							"type": "Expression"
+						},
+						"adlname": {
+							"value": "@pipeline().parameters.AdlName",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Calculated Hive Tables",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Full Load Hive Route Audit Facts",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_hive_derived_tables",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"market": {
+							"value": "@{pipeline().parameters.Market}",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Trigger Logicapp",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Calculated Hive Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Archive Files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_cegedim_trigger_aas_logicapp",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"LogicAppURL": {
+							"value": "@pipeline().parameters.AASLogicAppURL",
+							"type": "Expression"
+						},
+						"market": {
+							"value": "@pipeline().parameters.Market",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Market": {
+				"type": "String",
+				"defaultValue": "ITL"
+			},
+			"ADLFunctionURL": {
+				"type": "String",
+				"defaultValue": "https://movedatalakefilesasyncprod.azurewebsites.net/api/MoveDataLakeFilesAsync?code=Hh5M6CjlUPKTaHX4MjqKojG5Ru1FwMyc1YG3U8kxkelua09KN/HKrw=="
+			},
+			"Tenant": {
+				"type": "String",
+				"defaultValue": "95e66ecc-f2c2-464b-84d9-8fda407bc923"
+			},
+			"ClientId": {
+				"type": "String",
+				"defaultValue": "83d24301-0a33-424e-b56e-4f2af693948a"
+			},
+			"ClientSecret": {
+				"type": "String",
+				"defaultValue": "b+oGpFBnXehSPCHOXASLi5Rps4Ye/6DTvXJ6NNRGj3k="
+			},
+			"AdlName": {
+				"type": "String",
+				"defaultValue": "weuazpviradlspul01"
+			},
+			"FilePattern": {
+				"type": "String",
+				"defaultValue": "IQVIA_ITL*"
+			},
+			"BlobFunctionURL": {
+				"type": "String",
+				"defaultValue": "https://moveblobwithdonefilesprod.azurewebsites.net/api/MoveBlobWithDoneFiles?code=UxycujJdGSNlwkPDZpupBB/dtbInsyhZ0ueclLKK7LRVCcxNzNaQxw=="
+			},
+			"AASLogicAppURL": {
+				"type": "String",
+				"defaultValue": "https://prod-15.westeurope.logic.azure.com:443/workflows/7283d1213b284bf1bd4604428b7c362e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KodGDDfhLzII4U2wuKHOn8ssBjZ4BXuNdd0Tr7cfyfM"
+			},
+			"SFTPFolderPath": {
+				"type": "String",
+				"defaultValue": "Home/rb_hc_xtr/Outbound/Italy/API_FULL"
+			},
+			"SFTPMarketCode": {
+				"type": "String",
+				"defaultValue": "IT"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

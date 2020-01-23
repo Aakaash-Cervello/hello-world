@@ -1,0 +1,301 @@
+{
+	"name": "ds_sqldb_hck_imex_finance",
+	"properties": {
+		"description": "hck.stg_f_imex_finance\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "KPI_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL7_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "ICE_CAT_MAP_KEY",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_HIER_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_HIER_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "MASTER_CAT_MAP_KEY",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SEGMT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SEGMT_DESC",
+				"type": "String"
+			},
+			{
+				"name": "MGMT_ENTITY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "TIME_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_DESC",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "REPORTING_PERIOD",
+				"type": "String"
+			},
+			{
+				"name": "REPORTING_PERIOD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "FINANCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_CODE_SORT",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_SORT",
+				"type": "String"
+			},
+			{
+				"name": "CATBRAND_CAT_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CATBRAND_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "LOAD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "INSERT_DATE_TIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "UPDATE_DATE_TIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "KPI_AMOUNT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_PLAN_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_PLAN_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_PLAN_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_PLAN_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_PLAN_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_PLAN_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_PLAN_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_PLAN_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_PLAN_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_PLAN_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_PLAN_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_PLAN_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_PLAN_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_PLAN_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_PLAN_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_AMOUNT_PLAN_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_TSP_AMOUNT_PLAN_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_GM3P_AMOUNT_PLAN_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT_PLAN_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEITOTFC_AMOUNT_PLAN_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_NR3P_AMOUNT",
+				"type": "Double"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_f_imex_finance"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

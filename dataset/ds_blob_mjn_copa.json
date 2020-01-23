@@ -1,0 +1,70 @@
+{
+	"name": "ds_blob_mjn_copa",
+	"properties": {
+		"description": "To contain the data moved from sftp to blob",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "DATA LOAD DATE (UTC)",
+				"type": "String"
+			},
+			{
+				"name": "CALENDAR YEAR/MONTH",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY CODE",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY NAME",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT CENTER",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT CENTER NAME",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "BRAND NAME",
+				"type": "String"
+			},
+			{
+				"name": "LOC CURR",
+				"type": "String"
+			},
+			{
+				"name": "COPA MTD ACTUAL (LC)",
+				"type": "String"
+			},
+			{
+				"name": "NETSALES COPA MTD ACTUAL (LC)",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "",
+			"folderPath": "rbhealth/dailysales/mjn/copa"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

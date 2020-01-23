@@ -1,0 +1,12 @@
+{
+	"name": "ds_pfr_ifcn_sap_hana",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "IFCN_Hana_Prod",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RelationalTable"
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

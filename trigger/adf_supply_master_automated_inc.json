@@ -1,0 +1,34 @@
+{
+	"name": "adf_supply_master_automated_inc",
+	"properties": {
+		"description": "Daily Incremental load",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "adf_supply_master_automated_inc",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2018-08-21T08:01:57.24Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						15
+					],
+					"hours": [
+						6,
+						14
+					]
+				}
+			}
+		}
+	}
+}

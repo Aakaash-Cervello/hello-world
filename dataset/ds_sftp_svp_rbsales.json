@@ -1,0 +1,54 @@
+{
+	"name": "ds_sftp_svp_rbsales",
+	"properties": {
+		"description": "svp_rb_sales_report.csv",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "FX_TO_GBP",
+				"type": "String"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_L4W_GBP",
+				"type": "String"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_L4W_GBP",
+				"type": "String"
+			},
+			{
+				"name": "Market_Share_L4W",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_rb_sales_report.csv",
+			"folderPath": "/home/data/pulse/svp/monthly"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

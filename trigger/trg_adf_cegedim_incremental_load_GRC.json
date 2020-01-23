@@ -1,0 +1,45 @@
+{
+	"name": "trg_adf_cegedim_incremental_load_GRC",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "adf_cegedim_incremental_load",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Market": "GRC",
+					"ADLFunctionURL": "https://movedatalakefilesasyncprod.azurewebsites.net/api/MoveDataLakeFilesAsync?code=Hh5M6CjlUPKTaHX4MjqKojG5Ru1FwMyc1YG3U8kxkelua09KN/HKrw==",
+					"Tenant": "95e66ecc-f2c2-464b-84d9-8fda407bc923",
+					"ClientId": "83d24301-0a33-424e-b56e-4f2af693948a",
+					"ClientSecret": "b+oGpFBnXehSPCHOXASLi5Rps4Ye/6DTvXJ6NNRGj3k=",
+					"AdlName": "weuazpviradlspul01",
+					"FilePattern": "IQVIA_GRC*",
+					"BlobFunctionURL": "https://moveblobwithdonefilesprod.azurewebsites.net/api/MoveBlobWithDoneFiles?code=UxycujJdGSNlwkPDZpupBB/dtbInsyhZ0ueclLKK7LRVCcxNzNaQxw==",
+					"AASLogicAppURL": "https://prod-15.westeurope.logic.azure.com:443/workflows/7283d1213b284bf1bd4604428b7c362e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KodGDDfhLzII4U2wuKHOn8ssBjZ4BXuNdd0Tr7cfyfM",
+					"StorageAccount": "rbpstorageaccount003",
+					"StorageKey": "mVBEutOW+s2048U/BhjDHbsyR0wmBEqNpjzT4SbWfSU+bFzaS61mb/UjIY85O/PEP7HPyex5ldW247UWIl7s3g=="
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2018-12-16T21:19:00Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						5
+					]
+				}
+			}
+		}
+	}
+}

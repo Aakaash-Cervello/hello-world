@@ -1,0 +1,56 @@
+{
+	"name": "ds_sqldb_hck_customer_hier",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PARENT",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL7_CODE",
+				"type": "String"
+			},
+			{
+				"name": "LEVEL",
+				"type": "Int32"
+			},
+			{
+				"name": "ORDER",
+				"type": "Int32"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CHANNEL",
+				"type": "String"
+			},
+			{
+				"name": "PO1_CUSTOMER",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_d_customer_hier"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

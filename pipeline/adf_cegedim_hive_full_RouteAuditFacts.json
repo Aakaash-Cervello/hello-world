@@ -1,0 +1,99 @@
+{
+	"name": "adf_cegedim_hive_full_RouteAuditFacts",
+	"properties": {
+		"activities": [
+			{
+				"name": "Audit Fact",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Route Fact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_full/api_full_load_f_exec_outlet_audit_fact.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						},
+						"adlname": {
+							"value": "@{pipeline().parameters.adlname}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Route Fact",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_full/api_full_load_f_exec_route_fact.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						},
+						"adlname": {
+							"value": "@{pipeline().parameters.adlname}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"market": {
+				"type": "String",
+				"defaultValue": "ITL"
+			},
+			"adlname": {
+				"type": "String",
+				"defaultValue": "weuaztviradlspul01"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

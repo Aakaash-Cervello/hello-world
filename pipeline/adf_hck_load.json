@@ -1,0 +1,1744 @@
+{
+	"name": "adf_hck_load",
+	"properties": {
+		"description": "Pipeline that performs the following:\n1. Sources files from SFTP\n2. Copies them to blob staging\n3. Simultaneously copies the data from Blob staging to Blob Archive and SQL staging\n4. Deleted data from SFTP\n5. Executes stored procedure to move data from staging to target",
+		"activities": [
+			{
+				"name": "copy_sftpblobarch_hck",
+				"description": "Copy sftp files to Blob Archive",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_hck_brand_exception",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_customer_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_mgmt_team_map",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_imex_bei",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_brand_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_finance",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_shipping",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_soc_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_tv_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_nielsen_panel",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_nielsen_scan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealtharchive/hck/"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_all",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_hck_all",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_brand_exception",
+				"description": "Copy VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BRAND_CODE": "BRAND_CODE",
+							"BRAND_NAME": "BRAND_NAME",
+							"SCORECARD_BRAND_DESC": "SCORECARD_BRAND_DESC",
+							"LoadDateTime": "LoadDateTime",
+							"FileName": "FileName",
+							"AuditKey": "AuditKey"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_brand_exception",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_brand_exception",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_brand_exception",
+				"description": "Copy file from Blob Staging to SQL Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_d_brand_exception "
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BRAND_CODE": "BRAND_CODE",
+							"BRAND_NAME": "BRAND_NAME",
+							"SCORECARD_BRAND_DESC": "SCORECARD_BRAND_DESC",
+							"LoadDateTime": "LoadDateTime",
+							"FileName": "FileName",
+							"AuditKey": "AuditKey"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_brand_exception",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_brand_exception",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_brand_hier",
+				"description": "Copy VW_BC_LKPAWS_LKPAWSBRANDHIER.txt\n from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_LKPAWS_LKPAWSBRANDHIER.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSBRANDHIER.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_brand_hier",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_brand_hier",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_brand_hier",
+				"description": "Copy file from Blob Staging to SQL Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSBRANDHIER.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_d_brand_hier"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"PARENT": "PARENT",
+							"BRAND_HIER_BRAND_CODE": "BRAND_HIER_BRAND_CODE",
+							"BRAND_HIER_CODE": "BRAND_HIER_CODE",
+							"LEVEL": "LEVEL",
+							"ORDER": "ORDER",
+							"BRAND_SYNDICATE_KEY": "BRAND_SYNDICATE_KEY",
+							"SECTOR": "SECTOR",
+							"BRAND": "BRAND"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_brand_hier",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_brand_hier",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_customer",
+				"description": "File: VW_BC_LKPAWS_LKPAWSCUSTOMER.txt",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_LKPAWS_LKPAWSCUSTOMER.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSCUSTOMER.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_customer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_customer",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_customer",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSCUSTOMER.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_d_customer"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_customer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_customer",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_customer_hier",
+				"description": "Copy file VW_BC_LKPAWS_LKPAWSCUSTHIER.txt from SFTP to Blob Staging\n",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_LKPAWS_LKPAWSCUSTHIER.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSCUSTHIER.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_customer_hier",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_customer_hier",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_customer_hier",
+				"description": "Copy file VW_BC_LKPAWS_LKPAWSCUSTHIER.txt\nfrom Blob Staging to SQL staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_LKPAWS_LKPAWSCUSTHIER.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_d_customer_hier"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_customer_hier",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_customer_hier",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_mgmt_team_map",
+				"description": "Copy LKP_MGMT_TEAM_MAP.txt from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/LKP_MGMT_TEAM_MAP.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/LKP_MGMT_TEAM_MAP.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_mgmt_team_map",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_mgmt_team_map",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_mgmt_team_map",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/LKP_MGMT_TEAM_MAP.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "[hck].[d_management_team]"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_mgmt_team_map",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_mgmt_team_map",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_imex_bei",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTICEBEI_FCTICEBEI.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTICEBEI_FCTICEBEI.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_imex_brand_equity_invest",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_brand_equity_invest",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_bei",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTICEBEI_FCTICEBEI.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_imex_brand_equity_invest"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_brand_equity_invest",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_imex_brand_equity_invest",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_finance",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTICE_FCTICE.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTICE_FCTICE.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_imex_finance",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_finance",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_finance",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTICE_FCTICE.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_imex_finance"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_finance",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_imex_finance",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_shipping",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTPFR2_FCTPFR2.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTPFR2_FCTPFR2.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_imex_shipping",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_shipping",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_shipping",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTPFR2_FCTPFR2.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_imex_shipping"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_shipping",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_imex_shipping",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_soc_marketing",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTMANUALSHAREOFCLICKTHROUGH_FCTMANUALSHAREOFCLICKTHROUGH.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTMANUALSHAREOFCLICKTHROUGH_FCTMANUALSHAREOFCLICKTHROUGH.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_imex_soc_marketing",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_soc_marketing",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_shipping_soc_marketing",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTMANUALSHAREOFCLICKTHROUGH_FCTMANUALSHAREOFCLICKTHROUGH.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_imex_soc_marketing"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_soc_marketing",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_imex_soc_marketing",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_tv_marketing",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTMANUALTELVIDENT_FCTMANUALTELVIDENT.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTMANUALTELVIDENT_FCTMANUALTELVIDENT.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_imex_tv_marketing",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_tv_marketing",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_shipping_tv_marketing",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTMANUALTELVIDENT_FCTMANUALTELVIDENT.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_imex_tv_marketing"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_imex_tv_marketing",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_imex_tv_marketing",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_nielsen_panel",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTNIELSENPANEL_FCTNIELSENBRANDPANEL_PULSE.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTNIELSENPANEL_FCTNIELSENBRANDPANEL_PULSE.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_nielsen_brand_panel",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_nielsen_brand_panel",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_nielsen_panel",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTNIELSENPANEL_FCTNIELSENBRANDPANEL_PULSE.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_nielsen_brand_panel"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_nielsen_brand_panel",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_nielsen_brand_panel",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_hck_nielsen_scan",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/home/data/pulse/hck/VW_BC_FCTNIELSENSCAN_FCTNIELSENBRANDSCAN_PROMOVOL.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "rbhealth/hck/VW_BC_FCTNIELSENSCAN_FCTNIELSENBRANDSCAN_PROMOVOL.txt"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_hck_nielsen_brand_scan",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_hck_nielsen_brand_scan",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_hck_nielsen_scan",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "rbhealth/hck/VW_BC_FCTNIELSENSCAN_FCTNIELSENBRANDSCAN_PROMOVOL.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "hck.stg_f_nielsen_brand_scan"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_hck_nielsen_brand_scan",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_hck_nielsen_brand_scan",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Delete SFTP",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblobarch_hck",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "sp_stg_to_hck_all",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "sp_stg_to_rbone_hhck_all",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-01.uksouth.logic.azure.com:443/workflows/0a0bfa1d409446b794c16e0b9f3744f1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=R31wsCJq4-w1UwuV5ohwJIAzOG3oHdrFUHvlhY40z-g",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "/home/data/pulse/hck"
+					}
+				}
+			},
+			{
+				"name": "Execute_adf_svp_rbsales_load",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "sp_stg_to_hck_all",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_svp_rbsales_load",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Notify Success",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Delete SFTP",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Execute_adf_svp_rbsales_load",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline adf_hck_load Executed Succesfully"
+					}
+				}
+			},
+			{
+				"name": "Notify Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Delete SFTP",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Execute_adf_svp_rbsales_load",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline adf_hck_load Execution FAILED"
+					}
+				}
+			},
+			{
+				"name": "sp_stg_to_hck_all",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_hck_brand_exception",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_brand_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_customer_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_mgmt_team_map",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_bei",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_finance",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_shipping",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_shipping_soc_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_shipping_tv_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_nielsen_panel",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_nielsen_scan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[hck].[sp_stg_to_hck_all]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Truncate Staging",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_hck_brand_exception",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_customer_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_mgmt_team_map",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_imex_bei",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_brand_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_finance",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_shipping",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_soc_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_tv_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_nielsen_panel",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_hck_nielsen_scan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "hck.sp_truncate_stg"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sp_stg_to_rbone_hhck_all",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_hck_brand_exception",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_brand_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_customer_hier",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_mgmt_team_map",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_bei",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_finance",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_shipping",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_shipping_soc_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_shipping_tv_marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_nielsen_panel",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_hck_nielsen_scan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[rbone_hhck].[sp_stg_to_rbone_hhck_all]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"EmailTo": {
+				"type": "String",
+				"defaultValue": "RBHealthDailySales@mycervello.com"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

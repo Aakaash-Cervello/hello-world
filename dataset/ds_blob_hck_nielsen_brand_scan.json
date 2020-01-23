@@ -1,0 +1,27 @@
+{
+	"name": "ds_blob_hck_nielsen_brand_scan",
+	"properties": {
+		"description": "VW_BC_FCTNIELSENSCAN_FCTNIELSENBRANDSCAN_PROMOVOL.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_FCTNIELSENSCAN_FCTNIELSENBRANDSCAN_PROMOVOL.txt",
+			"folderPath": "rbhealth/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

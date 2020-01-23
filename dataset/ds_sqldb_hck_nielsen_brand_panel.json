@@ -1,0 +1,112 @@
+{
+	"name": "ds_sqldb_hck_nielsen_brand_panel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PERIOD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "PANEL",
+				"type": "String"
+			},
+			{
+				"name": "HOUSEHOLDS_PURCHASING_CURRENT_PERCENT",
+				"type": "Double"
+			},
+			{
+				"name": "HOUSEHOLDS_PURCHASING_YA_PERCENT",
+				"type": "Double"
+			},
+			{
+				"name": "AVERAGE_WEIGHT_OF_PURCHASE_CURRENT_PERCENT",
+				"type": "Double"
+			},
+			{
+				"name": "AVERAGE_WEIGHT_OF_PURCHASE_YA_PERCENT",
+				"type": "Double"
+			},
+			{
+				"name": "TDPS_ACV_DIST",
+				"type": "Double"
+			},
+			{
+				"name": "TDPS_ACV_DIST_YAG",
+				"type": "Double"
+			},
+			{
+				"name": "ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS",
+				"type": "Double"
+			},
+			{
+				"name": "ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG",
+				"type": "Double"
+			},
+			{
+				"name": "REPEAT_RATE",
+				"type": "Double"
+			},
+			{
+				"name": "REPEAT_RATE_YA",
+				"type": "Double"
+			},
+			{
+				"name": "FREQUENCY",
+				"type": "Double"
+			},
+			{
+				"name": "FREQUENCY_YA",
+				"type": "Double"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_f_nielsen_brand_panel"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

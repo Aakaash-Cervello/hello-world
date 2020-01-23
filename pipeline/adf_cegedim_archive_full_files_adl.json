@@ -1,0 +1,132 @@
+{
+	"name": "adf_cegedim_archive_full_files_adl",
+	"properties": {
+		"activities": [
+			{
+				"name": "Move Files to Archive",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().parameters.functionURL",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"Mapping": [
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_distributor_master/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_DISTRIBUTOR_MASTER_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_activity_ordering/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_ACTIVITY_ORDERING_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_cycle_dim/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_CYCLE_DIMM_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_outlet_audit_fact/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_OUTLET_AUDIT_FACT_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_outlet_audit_kpi_dim/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_OUTLET_AUDIT_KPI_DIM_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_product_attr_aud/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_PRODUCT_ATTR_AUD_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_route_fact/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_ROUTE_FACT_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_route_master/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_ROUTE_MASTER_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_sales_rep/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_SALES_REP_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_execution_store_master_aud/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_EXECUTION_STORE_MASTER_AUD_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							},
+							{
+								"InputFolder": "/rbhealth/api_landing/cegedim/rb_geotree/@{pipeline().parameters.market}/",
+								"DestinationFolder": "/rbhealth/archive/cegedim/@{replace(substring(utcnow(),0,10), '-', '')}/@{pipeline().parameters.market}/",
+								"FilePattern": "RB_GEOTREE_@{pipeline().parameters.MarketCode}_*",
+								"DoneFileCheck": "false"
+							}
+						],
+						"TenantID": "@{pipeline().parameters.tenant}",
+						"ClientID": "@{pipeline().parameters.clientId}",
+						"ClientSecret": "@{pipeline().parameters.clientSecret}",
+						"AdlAccountName": "@{pipeline().parameters.adlAccountName}.azuredatalakestore.net"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"functionURL": {
+				"type": "String"
+			},
+			"market": {
+				"type": "String"
+			},
+			"tenant": {
+				"type": "String"
+			},
+			"clientId": {
+				"type": "String"
+			},
+			"clientSecret": {
+				"type": "String"
+			},
+			"adlAccountName": {
+				"type": "String"
+			},
+			"MarketCode": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

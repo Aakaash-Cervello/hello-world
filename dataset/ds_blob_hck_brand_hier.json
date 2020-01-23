@@ -1,0 +1,61 @@
+{
+	"name": "ds_blob_hck_brand_hier",
+	"properties": {
+		"description": "FilenameL VW_BC_LKPAWS_LKPAWSBRANDHIER.txt",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "PARENT",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_HIER_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_HIER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "LEVEL",
+				"type": "String"
+			},
+			{
+				"name": "ORDER",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "SECTOR",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_LKPAWS_LKPAWSBRANDHIER.txt",
+			"folderPath": "rbhealth/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

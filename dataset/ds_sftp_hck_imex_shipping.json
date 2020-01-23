@@ -1,0 +1,101 @@
+{
+	"name": "ds_sftp_hck_imex_shipping",
+	"properties": {
+		"description": "VW_BC_FCTPFR2_FCTPFR2.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_HIER_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "PERIOD_DATE",
+				"type": "String"
+			},
+			{
+				"name": "TIME_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "FINANCIAL",
+				"type": "String"
+			},
+			{
+				"name": "PFR2",
+				"type": "String"
+			},
+			{
+				"name": "PFR2_PLAN",
+				"type": "String"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_FCTPFR2_FCTPFR2.txt",
+			"folderPath": "/home/data/pulse/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

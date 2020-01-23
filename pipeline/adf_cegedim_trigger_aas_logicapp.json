@@ -1,0 +1,63 @@
+{
+	"name": "adf_cegedim_trigger_aas_logicapp",
+	"properties": {
+		"activities": [
+			{
+				"name": "POST to Logic App",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().parameters.LogicAppURL",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"ServicePrincipalID": "83d24301-0a33-424e-b56e-4f2af693948a",
+						"ServicePrincipalSecret": "b+oGpFBnXehSPCHOXASLi5Rps4Ye/6DTvXJ6NNRGj3k=",
+						"SQLDWDB": "pharma_reporting_iqvia",
+						"SQLDWServer": "weuazpvirsqldwpul01",
+						"SQLDWScaleUpDWU": "DW500c",
+						"SQLDWScaleDownDWU": "DW100c",
+						"AASServerName": "weuazpviraaspul01",
+						"AASModelName": "Cegedim",
+						"AASScaleUpSKU": "S4",
+						"AASScaleDownSKU": "S4",
+						"SubscriptionID": "fe545c66-ec21-48d1-8bcb-f39a7d5d82ef",
+						"TenantID": "95e66ecc-f2c2-464b-84d9-8fda407bc923",
+						"ResourceGroupDB": "RBPSQLDB-RG",
+						"ResourceGroupAAS": "RBPSFTP-RG",
+						"PipelineName": "adf_cegedim_create_persistent_tables",
+						"DataFactoryName": "WEUAZPVIRDFPUL001",
+						"SQLConnectionString": "Server=tcp:weuazpvirsqldwpul01.database.windows.net,1433;Initial Catalog=pharma_reporting_iqvia;Persist Security Info=False;User ID=rbsqldwadmin;Password=Pr@dazure&753259;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+						"SQLQueryPartitionCreate": "SELECT aas_table, partition_key, data_query, data_source FROM execution.aas_refresh_partitions_PHYS WHERE market = '@{pipeline().parameters.market}'",
+						"SQLQueryPartitionRefresh": "SELECT DISTINCT aas_table, partition_key FROM execution.aas_refresh_partitions_PHYS WHERE market = '@{pipeline().parameters.market}'"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"LogicAppURL": {
+				"type": "String",
+				"defaultValue": "https://prod-15.westeurope.logic.azure.com:443/workflows/7283d1213b284bf1bd4604428b7c362e/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KodGDDfhLzII4U2wuKHOn8ssBjZ4BXuNdd0Tr7cfyfM"
+			},
+			"market": {
+				"type": "String",
+				"defaultValue": "ITL"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

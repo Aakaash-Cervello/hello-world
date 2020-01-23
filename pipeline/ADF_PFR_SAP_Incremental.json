@@ -1,0 +1,48 @@
+{
+	"name": "ADF_PFR_SAP_Incremental",
+	"properties": {
+		"description": "Pipeline to load PFR SAP Incremental data from SAP Hana System",
+		"activities": [
+			{
+				"name": "CPY_PFR_SAP_Incremental",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RelationalSource",
+						"query": "SELECT\n \"0DOC_NUMBER\" AS Sales_Document,\n \"0S_ORD_ITEM\" AS Sales_Document_Item,\n \"0SOLD_TO\" AS Sold_To_Party,\n \"0DOC_CATEG\" AS Sales_Document_Category,\n \"0SALESORG\" AS Sales_Organisation,\n \"0DISTR_CHAN\" AS Distribution_Channel,\n \"0EANUPC\" AS EAN_Code,\n \"0PLANT\" AS Plant,\n \"0MATERIAL\" AS Material,\n \"0MATERIAL__0MATL_TYPE\" AS Material_Type,\n \"0BILLTOPRTY\" AS Bill_To_Party,\n \"0PAYER\" AS Payer,\n \"0SHIP_TO\" AS Ship_To_Party ,\n \"0DOC_TYPE\" AS Sales_Document_Type,\n \"Z_DECOMP\" AS Decomposition_Indicator,\n \"Z_VDATU\" AS Requested_Delivery_Date,\n  \"0BASE_UOM\" AS Base_Unit_of_Measure,\n \"0MAT_SALES\" AS Material_In_Sales_Area,\n \"0MAT_SALES__ZZLMATGP\" AS Local_Material_Group,\n \"0CUST_SALES\" AS Customer_Sales_View,\n \"0CUST_SALES__0SALESEMPLY\" AS Sales_Rep,\n \"0CUST_SALES__ZCUS_LEV1\" AS Customer_Hierarchy_Level_1,\n \"0CUST_SALES__ZCUS_LVL2\" AS Customer_Hierarchy_Level_2,\n \"0CUST_SALES__ZCUS_LVL3\" AS Customer_Hierarchy_Level_3,\n \"0CUST_SALES__ZCUS_LVL4\" AS Customer_Hierarchy_Level_4,\n \"0CUST_SALES__ZCUS_LVL5\" AS Customer_Hierarchy_Level_5,\n \"0CUST_SALES__ZCUS_LVL6\" AS Customer_Hierarchy_Level_6,\n \"0CUST_SALES__Z_SLSEMPA\" AS Alternative_Sales_Rep,\n \"0DIVISION\" AS Division,\n \"0CUST_GRP5\" AS Customer_Group_5, \n \"ZPFR_SDOC\" AS Sales_Document_PFR,\n \"ZPFR_SDOC__0CALDAY\" AS PFR_Date,\n \"ZPFR_SDOC__0CALMONTH\" AS PFR_Month,\n \"ZPFR_SDOC__0CALWEEK\" AS PFR_Week,\n \"ZPFR_SDOC__0DOC_DATE\" AS PFR_0DOC_DATE,\n \"ZPFR_SDOC__0PO_NUMBER\" AS Customer_PO,\n \"ZPFR_SDOC__0REASON_REJ\" AS Rejection_Reason_Derived,\n \"ZPFR_SDOC__ZCALMONTH\" AS First_Shipped_Month,\n \"ZPFR_SDOC__ZCALWEEK\" AS First_Shipped_Week,\n \"ZPFR_SDOC__ZGBSTK\" AS Overall_Processing_Status,\n \"ZPFR_SDOC__ZPFR_OSHP\" AS Order_Shipped_Any_Line,\n \"ZPFR_SDOC__Z_ABSTK\" AS Rejection_Status,\n \"ZPFR_SDOC__Z_FKSAK\" AS Billing_Status_Order_Related,\n \"ZPFR_SDOC__Z_LFSTK\" AS Delivery_Status,\n \"ZPFR_SDOC__Z_PACTSDT\" AS Actual_Ship_Date,\n \"ZPFR_SDOC__Z_PFR1\" AS Relevant_To_PFR1,\n \"ZPFR_SDOC__Z_PFR2_CP\" AS Relevant_To_PFR2_CP,\n \"ZPFR_SDOC__Z_PFR2_PO\" AS Relevant_To_PFR2_PO,\n \"ZPFR_SDOC__Z_PLINTYP\" AS PFR_Line_Type,\n \"0MAT_SALES__ZLOBCNTRY\" AS Country,\n \"0MAT_SALES__ZAREA\" AS Area,\n \"0MAT_SALES__ZMARKET\" AS Market,\n \"0MAT_SALES__ZREGION\" AS Region,\n \"0MAT_PLANT\" AS Material_In_Plant,\n \"0MAT_PLANT__Z_PSFPDSC\" AS Primary_Supply_Factory_Name,\n \"0MAT_PLANT__Z_PSFSDSC\" AS Secondary_Supply_Factory_Name,\n \"0MAT_PLANT__Z_PSUPFCP\" AS Primary_Supply_Factory,\n \"0MAT_PLANT__Z_PSUPFCS\" AS Secondary_Supply_Factory,\n \"0MAT_PLANT__Z_SUPL_P\" AS Primary_Supplying_Plant,\n \"0MAT_PLANT__Z_SUPL_S\" AS Secondary_Supply_Plant,\n \"0CURRENCY\" AS Currency_key,\n \"Z_NS_GS_CURRENCY\" AS CURRENCY_Not_Shipped_Gross_Sales_Value,\n \"Z_NS_NIS_CURRENCY\" AS CURRENCY_Not_Shipped_Net_Value,\n \"0NET_VALUE_CURRENCY\" AS CURRECY_Net_value_order_item_doc_curr,\n \"0SUBTOTAL_1_CURRENCY\" AS CURRENCY_Condition_Subtotal_1,\n\"ZPFR_SDOC__0CANC_DATE\" AS Cancellation_Date,\n\"Z_WBSTA\" AS Goods_Movement_Status,\n\"Z_GRUND\" AS Reason_For_POD_Variance,\n\"Z_CALCU\" AS Quantity_Calculation_For_POD,\n\"0MATERIAL__Z_PSKUCD\" AS CSR_Material_Text,\n--\"0MATERIAL__Z_PITMNO2\" AS CSR_Material, -- removed and replaced with 0Material\n\"0MATERIAL\" AS CSR_Material,\n\"0MATERIAL__ZBRAND\" AS Brand,\n\"0MATERIAL__ZSEGMENT\" AS Segment,\n\"0MATERIAL__Z_PSECTOR\" AS CSR_Sector,\n\"0MATERIAL__Z_PPRDFRM\" AS CSR_Product_Form,\n\"0MATERIAL__Z_PCATGRY\" AS Category,\n\"0MATERIAL__Z_PVARNT\" AS Variant,\n\"0CUST_SALES__Z_PLAN_TO\" AS Plan_to_Party,\n\"0CUST_SALES__Z_PINTACC\" AS CSR_International_Account,\n\"0CUST_SALES__Z_PLANTOD\" AS PFR_Plan_to_Name,\n\"ZPFR_SDOC__Z_PRCGLBL\" AS Global_Reason_Code,\n\"0CUST_SALES__Z_PLAN_TO_description\" AS Plan_to_Party_Description,\n\"0BILLTOPRTY_description\" AS Bill_To_Party_Description,\n--\"0SHIP_TO_description\" AS Ship_To_Party_Description,\nNULL AS Ship_To_Party_Description,\n\"0MATERIAL__ZBRAND_description\" AS Brand_Description,\n\"0MATERIAL__0MATL_TYPE_description\" AS Material_Type_Description,\n\"0MATERIAL__Z_PCATGRY_description\" AS Category_Description,\n\"0MATERIAL__Z_PSEGMNT_description\" AS Segment_Description,\n--\"0MATERIAL__ZVARIANT_description\" AS Variant_Description,\nNULL AS Variant_Description,\n--\"0CURRENCY_description\" AS Currency_key_Description,             -- causing issue and hence replaced with \"0CURRENCY\"\n\"0CURRENCY\" AS Currency_key_Description,\n\"ZPFR_SDOC__Z_PRCGLBL_description\" AS Global_Reason_Code_Description,\n\"ZPFR_SDOC__0REASON_REJ_description\" AS Rejection_Reason_Derived_Description,\n\"0MAT_SALES__ZLOBCNTRY_description\" AS Country_Description,\n\"0MAT_SALES__ZAREA_description\" AS Area_Description,\n\"0MAT_SALES__ZREGION_description\" AS Region_Description,\n\"SAP_PFR1_Ordered_Qty\" AS SAP_PFR1_Ordered_Qty,\n\"SAP_PFR2_CP_Ordered_Qty\" AS SAP_PFR2_CP_Ordered_Qty,\n\"SAP_PFR2_PO_Ordered_Qty\" AS SAP_PFR2_PO_Ordered_Qty,\n\"SAP_PFR1_Open_Qty\" AS SAP_PFR1_Open_Qty,\n\"SAP_PFR2_CP_Open_Qty\" AS SAP_PFR2_CP_Open_Qty,\n\"SAP_PFR2_PO_Open_Qty\" AS SAP_PFR2_PO_Open_Qty,\n\"SAP_PFR1_Cancelled_Qty\" AS SAP_PFR1_Cancelled_Qty,\n\"SAP_PFR2_CP_Cancelled_Qty\" AS SAP_PFR2_CP_Cancelled_Qty,\n\"SAP_PFR2_PO_Cancelled_Qty\" AS SAP_PFR2_PO_Cancelled_Qty,\n\"Z_NS_GS\" AS Not_Shipped_Gross_Sales_Value,\n\"Z_NS_NIS\" AS Not_Shipped_Net_Value,\n\"Z_NS_QTY\" AS Not_Shipped_Quantity_in_base_unit,\n \"0QUANT_B\" AS Quantity_In_Base_UOM,\n \"0NET_VALUE\" AS Net_value_order_item_doc_curr,\n \"0SUBTOTAL_1\" AS Condition_Subtotal_1,\n \"0NO_POS\" AS Counter_For_Items,\n\"0ACT_DL_QTY\" AS Delivery_Quantity_base_unit,\n\"SAP_Cancelled_QTY\" AS SAP_Cancelled_QTY,\n\"SAP_Shipped_Qty\" AS SAP_Shipped_Qty,\n\"SAP_Ordered_Qty\" AS SAP_Ordered_Qty,\n\"PFR_WK_RKF_BACK_QTY\" AS SAP_Backordered_Qty,\n\"PFR_WK_RKF_OPEN_QTY\" AS SAP_Open_Qty,\n\"SAP_Extended_Price\" AS SAP_Extended_Price\nFROM \"_SYS_BIC\".\"CSR.SAP_PFR/CV_ZMKP\" \nWHERE \n\"0MAT_SALES__ZELOB\" = 'HEA'\nAND \"ZPFR_SDOC__0CALWEEK\" >=(select \n (select year(add_months(current_date,-2)) from dummy) ||\n                (select \n                   case when (select week(add_months(current_date,-2))  from dummy) < 10 \n                    then \n                    -- 1\n                      (select '0'||cast(week(add_months(current_date,-2)) as nvarchar)  from dummy)\n                     else \n                         (select cast(week(add_months(current_date,-2)) as nvarchar)  from dummy)\n                   end from dummy)\n   from dummy\n   )\n and \"ZPFR_SDOC__0CALWEEK\" <=(select \n (select year(add_months(current_date,0)) from dummy) ||\n                (select \n                   case when (select week(add_months(current_date,0))  from dummy) < 10 \n                    then \n                    -- 1\n                      (select '0'||cast(week(add_months(current_date,0)) as nvarchar)  from dummy)\n                     else \n                         (select cast(week(add_months(current_date,0)) as nvarchar)  from dummy)\n                   end from dummy)\n   from dummy\n   )"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sap_hana_pfr_rb",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adls_sap_pfr_incremental",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "PFR DataPipelines"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

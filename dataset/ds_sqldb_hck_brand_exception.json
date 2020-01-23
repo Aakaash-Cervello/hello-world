@@ -1,0 +1,45 @@
+{
+	"name": "ds_sqldb_hck_brand_exception",
+	"properties": {
+		"description": "Filename: VW_BC_LKPAWS_LKPAWSBRANDEXCEPTION.txt \nStaging table: hck.stg_d_brand_exception \n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_NAME",
+				"type": "String"
+			},
+			{
+				"name": "SCORECARD_BRAND_DESC",
+				"type": "String"
+			},
+			{
+				"name": "LoadDateTime",
+				"type": "DateTime"
+			},
+			{
+				"name": "FileName",
+				"type": "String"
+			},
+			{
+				"name": "AuditKey",
+				"type": "Int32"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_d_brand_exception "
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

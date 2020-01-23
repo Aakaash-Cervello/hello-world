@@ -1,0 +1,70 @@
+{
+	"name": "ds_sqldb_mjn_bpc",
+	"properties": {
+		"description": "Dataset for SQL DB staging table for MJN BPC ",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Data_Load_date",
+				"type": "String"
+			},
+			{
+				"name": "Calendar_Year_month",
+				"type": "String"
+			},
+			{
+				"name": "Company_Code",
+				"type": "String"
+			},
+			{
+				"name": "Company_Name",
+				"type": "String"
+			},
+			{
+				"name": "Profit_center",
+				"type": "String"
+			},
+			{
+				"name": "Profit_center_name",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "Brand_Name",
+				"type": "String"
+			},
+			{
+				"name": "Loc_Curr",
+				"type": "String"
+			},
+			{
+				"name": "BPC_Y_PROJ_LC",
+				"type": "Double"
+			},
+			{
+				"name": "NET_SALES_BPC_Y_PROJ_LC",
+				"type": "Double"
+			},
+			{
+				"name": "BPC_Y_BUDGET_LC",
+				"type": "String"
+			},
+			{
+				"name": "NET_SALES_BPC_Y_BUDGET_LC",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "sales.stg_f_bpc_load"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

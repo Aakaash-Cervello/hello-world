@@ -1,0 +1,18 @@
+{
+	"name": "ds_sqldb_rbone_hhck_f_imex_soc_marketing",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "rbone_hhck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[rbone_hhck].[f_imex_soc_marketing]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

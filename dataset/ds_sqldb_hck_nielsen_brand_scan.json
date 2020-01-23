@@ -1,0 +1,1157 @@
+{
+	"name": "ds_sqldb_hck_nielsen_brand_scan",
+	"properties": {
+		"description": "SQL Staging tabe for VW_BC_FCTNIELSENSCAN_FCTNIELSENBRANDSCAN_PROMOVOL.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "PERIOD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "SCAN",
+				"type": "String"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_GROWTH_PERCENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_GROWTH_PERCENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_GROWTH_PERCENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_GROWTH_PERCENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_GROWTH_PERCENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_GROWTH_PERCENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_GROWTH_PERCENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_GROWTH_PERCENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WEIGHTED_DISTRIBUTION_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VALUE_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_PROMO_VOLUME_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_LINEAR_SHELF_SPACE_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_AVERAGE_NUMBER_OF_SKUS_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VOLUME_STAT_CASES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_FEATURE_AND_DISPLAY_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_TDPS_ACV_DIST_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_Current_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_Current_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_Current_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_WTD_DIST_FEAT_DISPL_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_Current_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_SKUS_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "RB_VALUE_TPR_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_GROWTH_PERCENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_GROWTH_PERCENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_GROWTH_PERCENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_GROWTH_PERCENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_GROWTH_PERCENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_GROWTH_PERCENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_GROWTH_PERCENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_GROWTH_PERCENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WEIGHTED_DISTRIBUTION_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_WEEKLY_ACV_DISTRIBUTION_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VALUE_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_PROMO_VOLUME_SALES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_LINEAR_SHELF_SPACE_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_AVERAGE_NUMBER_OF_SKUS_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_DISPLAY_WEIGHTED_DISTRIBUTION_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VOLUME_STAT_CASES_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_FEATURE_AND_DISPLAY_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_TDPS_ACV_DIST_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_Current_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_CURRENT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_YAG_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_Current_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_CURRENT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_YAG_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_Current_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_CURRENT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_YAG_R52",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_WTD_DIST_FEAT_DISPL_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_Current_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_SKUS_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_CURRENT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MARKET_VALUE_TPR_YAG_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			},
+			{
+				"name": "COPY_FWD_IND",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_f_nielsen_brand_scan"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

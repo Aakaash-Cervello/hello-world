@@ -1,0 +1,105 @@
+{
+	"name": "ds_sftp_svp_turkey_newspage",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Year/Month",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "sales_rep_id",
+				"type": "String"
+			},
+			{
+				"name": "sales_rep_name",
+				"type": "String"
+			},
+			{
+				"name": "OUTLET_CLASSIFICATION",
+				"type": "String"
+			},
+			{
+				"name": "Total Visits",
+				"type": "String"
+			},
+			{
+				"name": "Distinct Visits",
+				"type": "String"
+			},
+			{
+				"name": "Coverage Universe",
+				"type": "String"
+			},
+			{
+				"name": "Pct Called",
+				"type": "String"
+			},
+			{
+				"name": "Average Calls Day",
+				"type": "String"
+			},
+			{
+				"name": "Detailed Visit",
+				"type": "String"
+			},
+			{
+				"name": "Pct Detailed",
+				"type": "String"
+			},
+			{
+				"name": "Num Products Detailed",
+				"type": "String"
+			},
+			{
+				"name": "Num SKU Audited",
+				"type": "String"
+			},
+			{
+				"name": "Num SKU In Stock",
+				"type": "String"
+			},
+			{
+				"name": "MSL Compliance",
+				"type": "String"
+			},
+			{
+				"name": "Vision Store Score",
+				"type": "String"
+			},
+			{
+				"name": "Visits with Orders",
+				"type": "String"
+			},
+			{
+				"name": "Order Net Revenue",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_turkey_newspage.csv",
+			"folderPath": "/home/data/pulse/svp/weekly"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

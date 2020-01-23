@@ -1,0 +1,305 @@
+{
+	"name": "adf_supply_target",
+	"properties": {
+		"activities": [
+			{
+				"name": "load target calendar",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_calendar.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target country",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_country.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target customer",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_customer.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target invoice type",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_invoice_type.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target order status",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_order_status.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target order type",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_order_type.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target product",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_product.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target reason code",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_reason_code.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target supply factory",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/d_supply_factory.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load target pfr fact",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load target calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Target/f_pfr_fact.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

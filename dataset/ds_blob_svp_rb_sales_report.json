@@ -1,0 +1,53 @@
+{
+	"name": "ds_blob_svp_rb_sales_report",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "FX_TO_GBP",
+				"type": "String"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_L4W_GBP",
+				"type": "String"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_L4W_GBP",
+				"type": "String"
+			},
+			{
+				"name": "Market_Share_L4W",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_rb_sales_report.csv",
+			"folderPath": "rbhealth/svp"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

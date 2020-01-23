@@ -1,0 +1,15 @@
+{
+	"name": "ls_pulse_blob",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Linked service to connect to Blob within 'rbstoragraccount001' storage account in RB Dev subscription",
+		"type": "AzureStorage",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": "**********"
+			}
+		},
+		"annotations": []
+	}
+}

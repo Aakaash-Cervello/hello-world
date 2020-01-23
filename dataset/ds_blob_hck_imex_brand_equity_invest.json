@@ -1,0 +1,27 @@
+{
+	"name": "ds_blob_hck_imex_brand_equity_invest",
+	"properties": {
+		"description": "VW_BC_FCTICEBEI_FCTICEBEI.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_FCTICEBEI_FCTICEBEI.txt",
+			"folderPath": "rbhealth/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

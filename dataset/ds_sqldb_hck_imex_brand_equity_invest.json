@@ -1,0 +1,149 @@
+{
+	"name": "ds_sqldb_hck_imex_brand_equity_invest",
+	"properties": {
+		"description": "VW_BC_FCTICEBEI_FCTICEBEI.txt",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "KPI_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL7_CODE",
+				"type": "String"
+			},
+			{
+				"name": "MASTER_CAT_MAP_KEY",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_HIER_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_HIER_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SEGMT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SEGMT_DESC",
+				"type": "String"
+			},
+			{
+				"name": "MGMT_ENTITY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "TIME_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_DESC",
+				"type": "String"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "REPORTING_PERIOD",
+				"type": "String"
+			},
+			{
+				"name": "REPORTING_PERIOD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "FINANCE",
+				"type": "String"
+			},
+			{
+				"name": "KPI_BEI_AMOUNT_FULL_YEAR",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEI_AMOUNT_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEI_AMOUNT_R52",
+				"type": "Double"
+			},
+			{
+				"name": "KPI_BEI_AMOUNT_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "CATBRAND_CAT_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CATBRAND_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_CODE_SORT",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_SORT",
+				"type": "String"
+			},
+			{
+				"name": "LOAD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "INSERT_DATE_TIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "UPDATE_DATE_TIME",
+				"type": "String"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_f_imex_brand_equity_invest"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

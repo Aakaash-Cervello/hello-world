@@ -1,0 +1,25 @@
+{
+	"name": "ds_adls_ifcn_pfr_incremental",
+	"properties": {
+		"description": "Dataset for IFCN Incremental file into datalake",
+		"linkedServiceName": {
+			"referenceName": "ls_adls_weu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "\t",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "IFCN_PFR_Incremental_file",
+			"folderPath": "/rbhealth/landing/supply_incremental/ifcn_source"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

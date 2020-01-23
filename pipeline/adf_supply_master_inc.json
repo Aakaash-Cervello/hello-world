@@ -1,0 +1,125 @@
+{
+	"name": "adf_supply_master_inc",
+	"properties": {
+		"activities": [
+			{
+				"name": "Master_Hive_Task",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_hive_master_inc",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "TriggerAAS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Master_Hive_Task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_trigger_logicapp_inc",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "UpdateProcessedTable",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Master_Hive_Task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/History/history_pfr_fact_inc.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ArchiveFiles",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "UpdateProcessedTable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://movedatalakefilesprod.azurewebsites.net/api/movedataLakefilesprod?code=F8TQ7CtMs1jBwZNjUMxQCDRpEruNZGCzMParpVwFi4GhHte/kM7gAw==",
+					"method": "POST",
+					"body": {
+						"AdlAccountName": "weuazpviradlspul01.azuredatalakestore.net",
+						"ClientID": "83d24301-0a33-424e-b56e-4f2af693948a",
+						"ClientSecret": "b+oGpFBnXehSPCHOXASLi5Rps4Ye/6DTvXJ6NNRGj3k=",
+						"Mapping": [
+							{
+								"DestinationFolder": "/rbhealth/archive/supply_incremental/@{replace(substring(utcnow(),0,10), '-', '')}/",
+								"DoneFileCheck": "false",
+								"FilePattern": "*",
+								"InputFolder": "/rbhealth/landing/supply_incremental/sap_source/"
+							},
+							{
+								"DestinationFolder": "/rbhealth/archive/supply_incremental/@{replace(substring(utcnow(),0,10), '-', '')}/",
+								"DoneFileCheck": "false",
+								"FilePattern": "*",
+								"InputFolder": "/rbhealth/landing/supply_incremental/jde_source/"
+							},
+							{
+								"DestinationFolder": "/rbhealth/archive/supply_incremental/@{replace(substring(utcnow(),0,10), '-', '')}/",
+								"DoneFileCheck": "false",
+								"FilePattern": "*",
+								"InputFolder": "/rbhealth/landing/supply_incremental/ifcn_source/"
+							}
+						],
+						"TenantID": "95e66ecc-f2c2-464b-84d9-8fda407bc923"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "supply_incremental"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

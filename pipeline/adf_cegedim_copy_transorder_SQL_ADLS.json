@@ -1,0 +1,55 @@
+{
+	"name": "adf_cegedim_copy_transorder_SQL_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "SQL_To_Blob_ITL_DailySales_TransferOrders",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "select \nsubstring(A.[order_number],25,45)   AS ORDER_NO\n,(row_number() OVER (PARTITION by substring(A.[order_number],25,45) ORDER by A.[delivery_date], [rb_product_code])) * 10\n                                   AS LINE_NO\n,B.[rb_product_code]               AS PROD_SKU_CODE\n,C.[external_id2]                  AS CUST_ST_CODE\n,convert(varchar, CAST(A.[delivery_date] as DATE), 23)   AS INVOICE_DATE\n,'2099-12-31'                      AS CANCEL_DATE\n,convert(varchar, A.[order_date], 23)                    AS TRANSACTION_DATE\n,convert(varchar, A.[order_date], 23)                    AS ORDER_CREATION_DATE\n,'EA'                              AS UNIT_OF_MEAS\n,'5250'                            AS MGMT_ENTITY_CODE\n,'NA'                              AS STATUS_CODE_NEXT\n,'NA'                              AS STATUS_CODE_LAST\n,'NA'                              AS REASON_CODE\n,convert(varchar, CAST(A.[delivery_date] as DATE), 23)   AS ACTUAL_DELIVERY_DATE\n,convert(varchar, CAST(A.[delivery_date] as DATE), 23)   AS DATEFOR_GL_VOUCHER\n,'9999-12-31'                      AS ORIGINAL_PROMISED_DELIVARY_DATE\n,'9999-12-31'                      AS PROMISED_DELIVERY_DATE\n,'9999-12-31'                      AS EXPECTED_DELIVERY_DATE\n,'9999-12-31'                      AS GOODS_RECEIPT_DATE\n,'9999-12-31'                      AS USER_RESERVED_DATE\n,'9999-12-31'                      AS PROMISED_SHIPMENT_DATE\n,'9999-12-31'                      AS REQUESTER_DELIVERY_DATE\n,convert(varchar, A.[order_date],23)                    AS PRICE_EFFECTIVE_DATE\n,'NA'                              AS REASON_DESC\n,'HO'                              AS ORDER_STATUS_CODE\n,'Held Orders'                     AS ORDER_STATUS_DESC\n,'EUR'                             AS CRNCY_CODE\n,'TO'                              AS ORDER_TYPE_CODE\n,'9999-12-31'                      AS CREDIT_NOTE_DATE\n,A.[ord_net_val]                   AS SALESORDER_AMOUNT\n,A.[ord_quantity]                  AS SALESORDER_QUANTITY\n,CASE WHEN A.[ord_quantity] = 0 THEN 0\n      ELSE round(A.[ord_net_val]/A.[ord_quantity],2)\n END                               AS PRICE_PER_UNIT\n,A.[ord_disc_val]                  AS NET_INVOICE_AMOUNT_CR\n,0                                 AS SALESORDER_BACK_ORDER_QUANTITY\n,'NA'                              AS HOLD_ORDER_CODE\n,NULL                              AS PO_NUMBER\n,0                                 AS INVOICE_NUMBER\n,NULL                              AS INVOICE_TYPE\n,0                                 AS WEIGHT\n,0                                 AS LIST_PRICE\n,'NA'                              AS CUSTOM01_TEXT\n,'NA'                              AS CUSTOM02_TEXT\n,'NA'                              AS CUSTOM03_TEXT\n,'NA'                              AS CUSTOM04_TEXT\n,'NA'                              AS CUSTOM05_TEXT\n,'NA'                              AS CUSTOM06_TEXT\n,'NA'                              AS CUSTOM07_TEXT\n,'NA'                              AS CUSTOM08_TEXT\n,'NA'                              AS CUSTOM09_TEXT\n,'NA'                              AS CUSTOM10_TEXT\n,'NA'                              AS CUSTOM11_TEXT\n,'NA'                              AS CUSTOM12_TEXT\n,'NA'                              AS CUSTOM13_TEXT\n,'NA'                              AS CUSTOM14_TEXT\n,'NA'                              AS CUSTOM15_TEXT\n,'NA'                              AS CUSTOM16_TEXT\n,'NA'                              AS CUSTOM17_TEXT\n,'NA'                              AS CUSTOM18_TEXT\n,'NA'                              AS CUSTOM19_TEXT\n,'NA'                              AS CUSTOM20_TEXT\n,'9999-12-31'                      AS CUSTOM21_DATE\n,'9999-12-31'                      AS CUSTOM22_DATE\n,'9999-12-31'                      AS CUSTOM23_DATE\n,'9999-12-31'                      AS CUSTOM24_DATE\n,'9999-12-31'                      AS CUSTOM25_DATE\n,'9999-12-31'                      AS CUSTOM26_DATE\n,'9999-12-31'                      AS CUSTOM27_DATE\n,'9999-12-31'                      AS CUSTOM28_DATE\n,'9999-12-31'                      AS CUSTOM29_DATE\n,'9999-12-31'                      AS CUSTOM30_DATE\n,0                                 AS CUSTOM31_NUMERIC\n,0                                 AS CUSTOM32_NUMERIC\n,0                                 AS CUSTOM33_NUMERIC\n,0                                 AS CUSTOM34_NUMERIC\n,0                                 AS CUSTOM35_NUMERIC\n,0                                 AS CUSTOM36_NUMERIC\n,0                                 AS CUSTOM37_NUMERIC\n,0                                 AS CUSTOM38_NUMERIC\n,0                                 AS CUSTOM39_NUMERIC\n,0                                 AS CUSTOM40_NUMERIC\nFROM [execution].[v_order_line_item_f] A,\n     [execution].[v_d_exec_product_attr_aud] B,\n     [execution].[v_d_exec_store_master_aud] C\nWHERE A.[product_id] = B.[product_id]\nAND A.[store_id] = C.[store_id]\nAND A.[order_date] >= '2018-01-01'\nAND A.[legal_entity_grp_code] = 'ITL'\nAND\n  (\n  A.ORDER_STATUS  ='HOLD'\n  OR\n  A.ORDER_TYPE = 'TRSF'\n  )\n"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_cegedim_v_order_line_item_f",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_ITL_DailySales_TO_2018_onwards",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

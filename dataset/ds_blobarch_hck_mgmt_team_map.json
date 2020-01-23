@@ -1,0 +1,30 @@
+{
+	"name": "ds_blobarch_hck_mgmt_team_map",
+	"properties": {
+		"description": "LKP_MGMT_TEAM_MAP.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "LKP_MGMT_TEAM_MAP.txt",
+			"folderPath": {
+				"value": "rbhealtharchive/hck",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

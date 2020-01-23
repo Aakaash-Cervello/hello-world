@@ -1,0 +1,173 @@
+{
+	"name": "ds_sftp_svp_summary_report",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Team",
+				"type": "String"
+			},
+			{
+				"name": "Region_Manager",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Rep",
+				"type": "String"
+			},
+			{
+				"name": "Class",
+				"type": "String"
+			},
+			{
+				"name": "Test_Count_Distinct_Rep",
+				"type": "String"
+			},
+			{
+				"name": "Test_Count_Distinct_Rep_2",
+				"type": "String"
+			},
+			{
+				"name": "Visits",
+				"type": "String"
+			},
+			{
+				"name": "Distinct_Visits",
+				"type": "String"
+			},
+			{
+				"name": "Target_Pharm",
+				"type": "String"
+			},
+			{
+				"name": "Pct_Called",
+				"type": "String"
+			},
+			{
+				"name": "Detailed_Visit",
+				"type": "String"
+			},
+			{
+				"name": "Pct_Detailed",
+				"type": "String"
+			},
+			{
+				"name": "Num_Product_Detailed",
+				"type": "String"
+			},
+			{
+				"name": "Num_SKU_Audited",
+				"type": "String"
+			},
+			{
+				"name": "Num_SKU_InStock",
+				"type": "String"
+			},
+			{
+				"name": "MSL_Compliance",
+				"type": "String"
+			},
+			{
+				"name": "Permanent_Vision_Target",
+				"type": "String"
+			},
+			{
+				"name": "Permanent_Vision_Score",
+				"type": "String"
+			},
+			{
+				"name": "Seasonal_Vision_Target",
+				"type": "String"
+			},
+			{
+				"name": "Seasonal_Vision_Score",
+				"type": "String"
+			},
+			{
+				"name": "Visits_with_Orders",
+				"type": "String"
+			},
+			{
+				"name": "Order_Strike_Rate",
+				"type": "String"
+			},
+			{
+				"name": "Order_Net_Revenue",
+				"type": "String"
+			},
+			{
+				"name": "Contracted_Pharm",
+				"type": "String"
+			},
+			{
+				"name": "Visit_On_Contracted",
+				"type": "String"
+			},
+			{
+				"name": "Total_Visits_YTD",
+				"type": "String"
+			},
+			{
+				"name": "Called_YTD",
+				"type": "String"
+			},
+			{
+				"name": "Detailed_YTD",
+				"type": "String"
+			},
+			{
+				"name": "Visits_On_Contracted",
+				"type": "String"
+			},
+			{
+				"name": "Visits_YTD_On_Contracted",
+				"type": "String"
+			},
+			{
+				"name": "Total_Vision_Stores",
+				"type": "String"
+			},
+			{
+				"name": "Unique_Customers_Visited_T3M",
+				"type": "String"
+			},
+			{
+				"name": "As_Of_Date",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_summary_report.csv",
+			"folderPath": "/home/data/pulse/svp/weekly"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

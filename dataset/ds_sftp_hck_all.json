@@ -1,0 +1,26 @@
+{
+	"name": "ds_sftp_hck_all",
+	"properties": {
+		"description": "hck sftp source files",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"folderPath": "/home/data/pulse/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,62 @@
+{
+	"name": "ds_sqldb_mjn_copa",
+	"properties": {
+		"description": "Dataset for SQL DB staging table for MJN COPA ",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Data_Load_date",
+				"type": "String"
+			},
+			{
+				"name": "Calendar_Year_month",
+				"type": "String"
+			},
+			{
+				"name": "Company_Code",
+				"type": "String"
+			},
+			{
+				"name": "Company_Name",
+				"type": "String"
+			},
+			{
+				"name": "Profit_center",
+				"type": "String"
+			},
+			{
+				"name": "Profit_center_name",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "Brand_Name",
+				"type": "String"
+			},
+			{
+				"name": "Loc_Curr",
+				"type": "String"
+			},
+			{
+				"name": "COPA_MTD_actual_LC",
+				"type": "Double"
+			},
+			{
+				"name": "COPA_Netsales_MTD_Actual_LC",
+				"type": "Double"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[sales].[stg_f_copa_load]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,16 @@
+{
+	"name": "SupplyProcessed",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SupplyProcessed",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"fileName": "",
+			"folderPath": "rbhealth/processed/supply"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

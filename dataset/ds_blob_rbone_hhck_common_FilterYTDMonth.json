@@ -1,0 +1,28 @@
+{
+	"name": "ds_blob_rbone_hhck_common_FilterYTDMonth",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_rbone_blob_imex_sasUri",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "rbone_hhck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "\t",
+				"rowDelimiter": "",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "common.FilterYTDMonth.dat",
+			"folderPath": "imex-cervello/hhck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

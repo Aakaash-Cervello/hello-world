@@ -1,0 +1,32 @@
+{
+	"name": "ds_blobarch_sales_rbsales",
+	"properties": {
+		"description": "Blob Archive that stores all RB Sales Data",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "\n",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "",
+			"folderPath": {
+				"value": "@concat('rbhealtharchive/dailysales/rbsales/', formatDateTime(utcnow(),'yyyyMMdd'))",
+				"type": "Expression"
+			}
+		},
+		"availability": {
+			"frequency": "Week",
+			"interval": 1
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

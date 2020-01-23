@@ -1,0 +1,23 @@
+{
+	"name": "ds_sftp_rb_sales",
+	"properties": {
+		"description": "RB Sales files that are present in the SFTP location",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "\n",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"folderPath": "/home/data/pulse/rbsales"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,26 @@
+{
+	"name": "ds_adls_ifcn_pfr",
+	"properties": {
+		"description": "Dataset for IFCN full file into datalake",
+		"linkedServiceName": {
+			"referenceName": "ls_adls_weu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "\t",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "IFCN_PFR_Full_file",
+			"folderPath": "/rbhealth/landing/supply/ifcn_source"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

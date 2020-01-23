@@ -1,0 +1,167 @@
+{
+	"name": "ds_cegedim_v_order_line_item_f",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sqldw_weu_pharma",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "store_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_rep_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "route_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "product_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "event_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "distributor_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "warehouse_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sub_distributor_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "legal_entity_grp_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_date",
+				"type": "date"
+			},
+			{
+				"name": "order_start_time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_end_time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "free_goods",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cust_po_number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_uom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "measure_currency",
+				"type": "nvarchar"
+			},
+			{
+				"name": "delivery_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "delivery_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_header_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "external_oh_id_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "external_od_id_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "delivery_status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cycle_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "attribute8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "attribute9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "attribute10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "attribute11_dtm",
+				"type": "nvarchar"
+			},
+			{
+				"name": "attribute12_dtm",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ord_disc_val",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ord_free_quantity",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ord_gross_val",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ord_net_val",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ord_quantity",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "action_code",
+				"type": "nvarchar"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

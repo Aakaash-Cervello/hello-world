@@ -1,0 +1,16 @@
+{
+	"name": "ls_iqvia_sftp",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Sftp",
+		"typeProperties": {
+			"host": "secure-transfer-ftp.cegedim.com",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "rb_hc_xtr",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIldFVUFaUFZJUkRGUFVMMDAxXzZkYjYyYjBjLWZmNWEtNGEwZC04MTViLWVhODkyYjU0NDFkZCINCn0="
+		}
+	}
+}

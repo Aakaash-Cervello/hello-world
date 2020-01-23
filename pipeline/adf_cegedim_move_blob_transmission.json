@@ -1,0 +1,60 @@
+{
+	"name": "adf_cegedim_move_blob_transmission",
+	"properties": {
+		"activities": [
+			{
+				"name": "Move to Transmission",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@pipeline().parameters.TransferBlobURL",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"StorageCredentials": "DefaultEndpointsProtocol=https;AccountName=@{pipeline().parameters.StorageAccount};AccountKey=@{pipeline().parameters.StorageKey};EndpointSuffix=core.windows.net",
+						"SourceContainer": "rbhealth",
+						"DestinationContainer": "transmission",
+						"SourceDirectoryPath": "INBOUND/CEGEDIM/",
+						"DoneContainer": "transmission",
+						"DoneFileExtension": ".DONE",
+						"TextFileExtension": ".txt",
+						"FilePattern": "@{pipeline().parameters.FilePattern}"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"TransferBlobURL": {
+				"type": "String",
+				"defaultValue": "https://moveblobwithdonefilesprod.azurewebsites.net/api/MoveBlobWithDoneFiles?code=UxycujJdGSNlwkPDZpupBB/dtbInsyhZ0ueclLKK7LRVCcxNzNaQxw=="
+			},
+			"FilePattern": {
+				"type": "String",
+				"defaultValue": "IQVIA_ITL"
+			},
+			"StorageAccount": {
+				"type": "String",
+				"defaultValue": "rbpstorageaccount003"
+			},
+			"StorageKey": {
+				"type": "String",
+				"defaultValue": "mVBEutOW+s2048U/BhjDHbsyR0wmBEqNpjzT4SbWfSU+bFzaS61mb/UjIY85O/PEP7HPyex5ldW247UWIl7s3g=="
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

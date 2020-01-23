@@ -1,0 +1,41 @@
+{
+	"name": "ds_sqldb_svp_rb_sales_report",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "YEAR_MONTH",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "RB_VALUE_SALES_CURRENT_L4W_GBP",
+				"type": "String"
+			},
+			{
+				"name": "MARKET_VALUE_SALES_CURRENT_L4W_GBP",
+				"type": "String"
+			},
+			{
+				"name": "Market_Share_L4W",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "svp.stg_f_rb_sales_report"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

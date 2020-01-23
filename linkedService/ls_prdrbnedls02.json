@@ -1,0 +1,16 @@
+{
+	"name": "ls_prdrbnedls02",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://rbpulprdrbnedls02.azuredatalakestore.net/webhdfs/v1",
+			"servicePrincipalId": "cdcb4e67-4fa2-44bd-96a0-9a9cc3c2611c",
+			"tenant": "95e66ecc-f2c2-464b-84d9-8fda407bc923",
+			"subscriptionId": "fe545c66-ec21-48d1-8bcb-f39a7d5d82ef",
+			"resourceGroupName": "EXODUS-PROD-RG",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIldFVUFaUFZJUkRGUFVMMDAxX2Q3ZDRmYzFhLWM2NzEtNDM2YS1iMGQ5LTlhNTRiM2VjZDg5MyINCn0="
+		}
+	}
+}

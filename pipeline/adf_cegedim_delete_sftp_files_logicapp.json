@@ -1,0 +1,46 @@
+{
+	"name": "adf_cegedim_delete_sftp_files_logicapp",
+	"properties": {
+		"activities": [
+			{
+				"name": "Logicapp Delete Files",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-06.uksouth.logic.azure.com:443/workflows/df433f6ae26e41e6b179d689dbf7e735/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=oX0-e1nKOzc9_oP4CYng118i1KkVp5IJAxB1QheVip0",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "/@{pipeline().parameters.SFTPFolderPath}",
+						"filepattern": "_@{pipeline().parameters.SFTPMarketCode}_"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"SFTPFolderPath": {
+				"type": "String"
+			},
+			"SFTPMarketCode": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,128 @@
+{
+	"name": "ds_sqldb_hck_customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "CUST_LVL1_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL1_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL2_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL2_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL3_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL3_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL4_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL4_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL5_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL5_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL6_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL6_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL7_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_LVL7_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CUST_INTL_ACCT_GRP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CUST_INTL_ACCT_GRP_DESC",
+				"type": "String"
+			},
+			{
+				"name": "CUST_INTL_BUY_GRP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CUST_INTL_BUY_GRP_DESC",
+				"type": "String"
+			},
+			{
+				"name": "TRADE_TYPE_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "TRADE_TYPE_DESC",
+				"type": "String"
+			},
+			{
+				"name": "CUST_PLANTO_CODE",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_PLANTO_NAME",
+				"type": "String"
+			},
+			{
+				"name": "LEGAL_ENTITY_GRP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SCORECARD_CUST_DESC",
+				"type": "String"
+			},
+			{
+				"name": "SORT_ORDER",
+				"type": "Int32"
+			},
+			{
+				"name": "LoadDateTime",
+				"type": "DateTime"
+			},
+			{
+				"name": "AuditKey",
+				"type": "Int32"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_d_customer"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

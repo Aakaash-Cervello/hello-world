@@ -1,0 +1,92 @@
+{
+	"name": "ds_sqldb_hck_imex_tv_marketing",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "MARKETING",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "Int32"
+			},
+			{
+				"name": "BRAND_HIER_BRAND_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "Int32"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "PERIOD_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "TIME_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "TELEVIDENT_TV_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "TELEVIDENT_OLV_YTD",
+				"type": "Double"
+			},
+			{
+				"name": "TELEVIDENT_COMBINED_L4W",
+				"type": "Double"
+			},
+			{
+				"name": "WEEKS_ON_AIR",
+				"type": "String"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "hck.stg_f_imex_tv_marketing"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

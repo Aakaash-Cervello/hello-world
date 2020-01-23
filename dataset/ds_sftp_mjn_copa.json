@@ -1,0 +1,77 @@
+{
+	"name": "ds_sftp_mjn_copa",
+	"properties": {
+		"description": "MJN COPA file that is present in the SFTP location",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "DATA LOAD DATE (UTC)",
+				"type": "String",
+				"description": "YYYYMMDD format of date"
+			},
+			{
+				"name": "CALENDAR YEAR/MONTH",
+				"type": "String",
+				"description": "YYYYMM format"
+			},
+			{
+				"name": "COMPANY CODE",
+				"type": "String",
+				"description": "4 letter MJN company code"
+			},
+			{
+				"name": "COMPANY NAME",
+				"type": "String",
+				"description": "MJN Company name"
+			},
+			{
+				"name": "PROFIT CENTER",
+				"type": "String",
+				"description": "MJN PROFIT CENTER code"
+			},
+			{
+				"name": "PROFIT CENTER NAME",
+				"type": "String",
+				"description": "MJN PROFIT CENTER NAME"
+			},
+			{
+				"name": "BRAND",
+				"type": "String",
+				"description": "Brand code"
+			},
+			{
+				"name": "BRAND NAME",
+				"description": "Brand name"
+			},
+			{
+				"name": "LOC CURR",
+				"type": "String"
+			},
+			{
+				"name": "COPA MTD ACTUAL (LC)",
+				"type": "String"
+			},
+			{
+				"name": "NETSALES COPA MTD ACTUAL (LC)",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "\n",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"folderPath": "/home/data/mjn",
+			"fileFilter": "*copa*"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

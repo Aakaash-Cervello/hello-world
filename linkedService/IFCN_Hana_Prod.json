@@ -1,0 +1,19 @@
+{
+	"name": "IFCN_Hana_Prod",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "Linked Service to IFCN SAP Hana environment",
+		"annotations": [],
+		"type": "SapHana",
+		"typeProperties": {
+			"server": "10.38.114.179:30015",
+			"authenticationType": "Basic",
+			"userName": "MJNRB_ADF_OTC01",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyNmMyMTBhNy1jYTViLTRkYTQtOTc4Mi1lNDAwMDg2ZDllNGQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "IntegrationRuntime-SelfHosted-1fl",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

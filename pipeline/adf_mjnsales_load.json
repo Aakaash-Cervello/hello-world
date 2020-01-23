@@ -1,0 +1,626 @@
+{
+	"name": "adf_mjnsales_load",
+	"properties": {
+		"description": "Pipeline to load MJN data (copa, bpc, orders). It performs the following actions:\n1. Copy MJN files from SFTP to Blob Staging\n2. Runs stored procedure to truncate temp_staging\n3. Copy MJN files from Blob Staging to Azure SQL Database\n4. Execute stored procedure to move data from SQL DB Staging to SQL DB Target\n5. Invokes pipeline to archive the MJN files in Blob Archive ",
+		"activities": [
+			{
+				"name": "copy_sftpblob_copa",
+				"description": "Copies COPA file from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "adf_deleteblobstg_copa",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_mjn_copa",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_mjn_copa",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_bpc",
+				"description": "Copies BPC file from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "adf_deleteblobstg_bpc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_mjn_bpc",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_mjn_bpc",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_orders",
+				"description": "Copy Orders data from SFTP to Blob Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "adf_deleteblobstg_orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_mjn_orders",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_mjn_orders",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_copa",
+				"description": "Copies COPA data from Blob Staging to SQL DB staging table. ",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_temp_truncate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"DATA LOAD DATE (UTC)": "Data_Load_date",
+							"CALENDAR YEAR/MONTH": "Calendar_Year_month",
+							"COMPANY CODE": "Company_Code",
+							"COMPANY NAME": "Company_Name",
+							"PROFIT CENTER": "Profit_center",
+							"PROFIT CENTER NAME": "Profit_center_name",
+							"BRAND": "Brand",
+							"BRAND NAME": "Brand_Name",
+							"LOC CURR": "Loc_Curr",
+							"COPA MTD ACTUAL (LC)": "COPA_MTD_actual_LC",
+							"NETSALES COPA MTD ACTUAL (LC)": "COPA_Netsales_MTD_Actual_LC"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_mjn_copa",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_mjn_copa",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_bpc",
+				"description": "Copy BPC data from Blob staging to SQL staging table",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_temp_truncate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_mjn_bpc",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_mjn_bpc",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_orders",
+				"description": "Copy Orders data from Blob staging to SQL staging table",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_temp_truncate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"DATA LOAD DATE (UTC)": "Data_load_date",
+							"CALENDAR DAY": "Calendar_Day",
+							"CALENDAR YEAR/MONTH": "Calendar_Year_Month",
+							"COMPANY CODE": "COMPANY_CODE",
+							"COMPANY NAME": "COMPANY_NAME",
+							"PROFIT CENTER": "PROFIT_CENTER",
+							"PROFIT CENTER NAME": "PROFIT_CENTER_NAME",
+							"BRAND": "BRAND",
+							"BRAND NAME": "BRAND_NAME",
+							"LOC CURR": "LOC_CURR",
+							"NEW ORDER VALUE (LC)": "NEW_ORDER_VALUE_LC",
+							"NEW ORDER NET VALUE (LC)": "NEW_ORDER_NET_VALUE_LC",
+							"PENDING ORDER VALUE (LC)": "PENDING_ORDER_VALUE_LC",
+							"PENDING NET ORDER VALUE (LC)": "PENDING_NET_ORDER_VALUE_LC",
+							"PENDING ORDERS DUE PRCUR MO (LC)": "PENDING_ORDERS_DUE_PRCUR_MO_LC",
+							"PENDING ORDERS DUE NET VALUE PRCUR MO (LC)": "PENDING_ORDERS_DUE_NET_VALUE_PRCUR_MO_LC"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_mjn_orders",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_mjn_orders",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "sp_sql_plan_merge",
+				"description": "Stored procedure that combines MJN and RB sales data into a unified data model.",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sp_mjn_stg_load_to_prd",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[sales].[sp_f_plan_tomerge]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Execute MJN Sales Archive",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_bpc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_copa",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_mjnsales_archive",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "sp_sql_temp_truncate",
+				"description": "Stored procedure to truncate all 3 MJN temp tables before loading data from Blob.",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_copa",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_bpc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "sales.sp_mjn_stg_truncate"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "adf_deleteblobstg_copa",
+				"description": "Deleted all MJN files that is in staging before pipeline begins",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-23.uksouth.logic.azure.com:443/workflows/91fb155589f14a6b9a006614dbeda78d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rNpcauz7ZQE-a0kFpgUHf7nHkzLDshF65SOy2zMzZJ8",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "rbhealth/dailysales/mjn/copa/"
+					}
+				}
+			},
+			{
+				"name": "Notify Successs",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_plan_merge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "sp_sql_sales_merge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Executed Succesfully"
+					}
+				}
+			},
+			{
+				"name": "Notify Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_sql_sales_merge",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Execution FAILED"
+					}
+				}
+			},
+			{
+				"name": "sp_sql_sales_merge",
+				"description": "Stored procedure that combines MJN and RB sales data into a unified data model.",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sp_mjn_stg_load_to_prd",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[sales].[sp_f_sales_tomerge]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sp_mjn_stg_load_to_prd",
+				"description": "Stored procedure that loads data from pre-staging table to staging table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_copa",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_bpc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_blobsql_orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[sales].[sp_mjn_stg_load_to_prd]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "adf_deleteblobstg_bpc",
+				"description": "Deleted all MJN files that is in staging before pipeline begins",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-23.uksouth.logic.azure.com:443/workflows/91fb155589f14a6b9a006614dbeda78d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rNpcauz7ZQE-a0kFpgUHf7nHkzLDshF65SOy2zMzZJ8",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "rbhealth/dailysales/mjn/bpc/"
+					}
+				}
+			},
+			{
+				"name": "adf_deleteblobstg_orders",
+				"description": "Deleted all MJN files that is in staging before pipeline begins",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-23.uksouth.logic.azure.com:443/workflows/91fb155589f14a6b9a006614dbeda78d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rNpcauz7ZQE-a0kFpgUHf7nHkzLDshF65SOy2zMzZJ8",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "rbhealth/dailysales/mjn/orders/"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"EmailTo": {
+				"type": "String",
+				"defaultValue": "RBHealthDailySales@mycervello.com"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

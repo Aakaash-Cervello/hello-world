@@ -1,0 +1,162 @@
+{
+	"name": "adf_mjnsales_archive",
+	"properties": {
+		"description": "Pipeline that archives the MJN files on a daily basis",
+		"activities": [
+			{
+				"name": "copy_sftpblobarch_sales_copa",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_mjn_copa",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_sales_copa",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblobarch_sales_bpc",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_mjn_bpc",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_sales_bpc",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblobarch_sales_orders",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "BlobSink",
+						"copyBehavior": "PreserveHierarchy"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_mjn_orders",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_sales_orders",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "adf_deletesftp_mjn",
+				"description": "Logic App HTTP request that deletes the files from SFTP once archiving is complete. Invokes Logic App 'rbpulse_delete_sftp_mjn'",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblobarch_sales_copa",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblobarch_sales_bpc",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblobarch_sales_orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-01.uksouth.logic.azure.com:443/workflows/0a0bfa1d409446b794c16e0b9f3744f1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=R31wsCJq4-w1UwuV5ohwJIAzOG3oHdrFUHvlhY40z-g",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "/home/data/mjn"
+					}
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,69 @@
+{
+	"name": "ds_sftp_svp_calls_per_day",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "As_Of_Date",
+				"type": "String"
+			},
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Team",
+				"type": "String"
+			},
+			{
+				"name": "Region_Manager",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Rep",
+				"type": "String"
+			},
+			{
+				"name": "Visits",
+				"type": "String"
+			},
+			{
+				"name": "Days_in_Field",
+				"type": "String"
+			},
+			{
+				"name": "Calls_Per_Day",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_calls_per_day.csv",
+			"folderPath": "/home/data/pulse/svp/weekly"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

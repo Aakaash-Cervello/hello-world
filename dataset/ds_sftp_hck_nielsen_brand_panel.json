@@ -1,0 +1,121 @@
+{
+	"name": "ds_sftp_hck_nielsen_brand_panel",
+	"properties": {
+		"description": "Filename: VW_BC_FCTNIELSENPANEL_FCTNIELSENBRANDPANEL_PULSE.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "SOURCE",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "BRAND_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PERIOD_DATE",
+				"type": "String"
+			},
+			{
+				"name": "SCENARIO",
+				"type": "String"
+			},
+			{
+				"name": "CURRENCY",
+				"type": "String"
+			},
+			{
+				"name": "PANEL",
+				"type": "String"
+			},
+			{
+				"name": "HOUSEHOLDS_PURCHASING_CURRENT_PERCENT",
+				"type": "String"
+			},
+			{
+				"name": "HOUSEHOLDS_PURCHASING_YA_PERCENT",
+				"type": "String"
+			},
+			{
+				"name": "AVERAGE_WEIGHT_OF_PURCHASE_CURRENT_PERCENT",
+				"type": "String"
+			},
+			{
+				"name": "AVERAGE_WEIGHT_OF_PURCHASE_YA_PERCENT",
+				"type": "String"
+			},
+			{
+				"name": "TDPS_ACV_DIST",
+				"type": "String"
+			},
+			{
+				"name": "TDPS_ACV_DIST_YAG",
+				"type": "String"
+			},
+			{
+				"name": "ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS",
+				"type": "String"
+			},
+			{
+				"name": "ACV_DIST_DISPLAY_ONLY_TDPS_PLUS_ACV_DIST_FEATURE_DISPLAY_TDPS_YAG",
+				"type": "String"
+			},
+			{
+				"name": "REPEAT_RATE",
+				"type": "String"
+			},
+			{
+				"name": "REPEAT_RATE_YA",
+				"type": "String"
+			},
+			{
+				"name": "FREQUENCY",
+				"type": "String"
+			},
+			{
+				"name": "FREQUENCY_YA",
+				"type": "String"
+			},
+			{
+				"name": "MGMT_TEAM",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_FCTNIELSENPANEL_FCTNIELSENBRANDPANEL_PULSE.txt",
+			"folderPath": "/home/data/pulse/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

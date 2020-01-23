@@ -1,0 +1,26 @@
+{
+	"name": "ds_blobarch_svp_calls_per_day",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_calls_per_day.csv",
+			"folderPath": {
+				"value": "@concat('rbhealtharchive/svp/', substring(formatDateTime(utcnow(),'yyyyMMdd'),0,8)) ",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

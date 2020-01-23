@@ -1,0 +1,82 @@
+{
+	"name": "ds_blob_rb_sales",
+	"properties": {
+		"description": "To contain the RB Sales data moved from sftp to blob staging",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"structure": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Month_Of_Year",
+				"type": "String"
+			},
+			{
+				"name": "Day_Of_Month",
+				"type": "String"
+			},
+			{
+				"name": "Brand_Code",
+				"type": "String"
+			},
+			{
+				"name": "Brand_Name",
+				"type": "String"
+			},
+			{
+				"name": "Legal_Entity_Group_Code",
+				"type": "String"
+			},
+			{
+				"name": "Management_Entity_Code",
+				"type": "String"
+			},
+			{
+				"name": "Currency_Code",
+				"type": "String"
+			},
+			{
+				"name": "Gross_Sales_3P",
+				"type": "String"
+			},
+			{
+				"name": "Gross_Sales_Latest_Estimate",
+				"type": "String"
+			},
+			{
+				"name": "Net_Revenue_3P",
+				"type": "String"
+			},
+			{
+				"name": "Net_Revenue_Latest_Estimate",
+				"type": "String"
+			},
+			{
+				"name": "Total_Open_Order_Amount_by_Promised_Shipment_Date",
+				"type": "String"
+			},
+			{
+				"name": "Total_Open_Order_Amount_by_Promised_Delivery_Date",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "rbsales.txt",
+			"folderPath": "rbhealth/dailysales/rbsales"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

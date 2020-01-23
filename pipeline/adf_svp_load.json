@@ -1,0 +1,809 @@
+{
+	"name": "adf_svp_load",
+	"properties": {
+		"description": "Pipeline that performs the following:\n1. Sources 5 SVP files from SFTP\n2. Copies them to blob staging and blob archive\n3. Executes stored procedure to truncate staging\n4. Copies files from Blob staging to SQL Staging\n5. Executes stored procedure to move data from staging to target",
+		"activities": [
+			{
+				"name": "copy_sftpblob_svp_brand_report",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Year": "Year",
+							"Year_Month": "Year_Month",
+							"Month": "Month",
+							"Brand": "Brand",
+							"Country": "Country",
+							"Team": "Team",
+							"Customer_Class": "Customer_Class",
+							"Target_Pharmacies": "Target_Pharmacies",
+							"Num_Detailed_Visits": "Num_Detailed_Visits",
+							"Num_Products_Detailed": "Num_Products_Detailed",
+							"Num_SKU_Audited": "Num_SKU_Audited",
+							"Num_SKU_InStock": "Num_SKU_InStock",
+							"MSL_Compliance": "MSL_Compliance",
+							"Customers_With_Orders": "Customers_With_Orders",
+							"Orders_Taken": "Orders_Taken",
+							"Order_Net_Revenue": "Order_Net_Revenue",
+							"Reps_With_Orders": "Reps_With_Orders",
+							"PD_Brand_Block_Achievement_Numerator": "PD_Brand_Block_Achievement_Numerator",
+							"PD_Eye_Level_Achievement_Numerator": "PD_Eye_Level_Achievement_Numerator",
+							"PD_Within_Category_Achievement_Numerator": "PD_Within_Category_Achievement_Numerator",
+							"PD_Shelf_Tray_Achievement_Numerator": "PD_Shelf_Tray_Achievement_Numerator",
+							"SD FSDU Achievement Numerator": "SD FSDU Achievement Numerator",
+							"SD CTU Achievement Numerator": "SD CTU Achievement Numerator",
+							"SD Shelf Hang Achievement Numerator": "SD Shelf Hang Achievement Numerator",
+							"Primary Display Achievement Numerator": "Primary Display Achievement Numerator",
+							"Secondary Display Achievement Numerator": "Secondary Display Achievement Numerator",
+							"As_Of_Date": "As_Of_Date"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_svp_brand_report",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_svp_brand_report",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blob_blobarch_svp_brand_report",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_svp_brand_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_svp_brand_report",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_svp_brand_report",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_svp_brand_report",
+				"description": "Copies data from Blob Staging to SQL Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Year": "Year",
+							"Year_Month": "Year_Month",
+							"Month": "Month",
+							"Brand": "Brand",
+							"Country": "Country",
+							"Team": "Team",
+							"Customer_Class": "Customer_Class",
+							"Target_Pharmacies": "Target_Pharmacies",
+							"Num_Detailed_Visits": "Num_Detailed_Visits",
+							"Num_Products_Detailed": "Num_Products_Detailed",
+							"Num_SKU_Audited": "Num_SKU_Audited",
+							"Num_SKU_InStock": "Num_SKU_InStock",
+							"MSL_Compliance": "MSL_Compliance",
+							"Customers_With_Orders": "Customers_With_Orders",
+							"Orders_Taken": "Orders_Taken",
+							"Order_Net_Revenue": "Order_Net_Revenue",
+							"Reps_With_Orders": "Reps_With_Orders",
+							"PD_Brand_Block_Achievement_Numerator": "PD_Brand_Block_Achievement_Numerator",
+							"PD_Eye_Level_Achievement_Numerator": "PD_Eye_Level_Achievement_Numerator",
+							"PD_Within_Category_Achievement_Numerator": "PD_Within_Category_Achievement_Numerator",
+							"PD_Shelf_Tray_Achievement_Numerator": "PD_Shelf_Tray_Achievement_Numerator",
+							"SD FSDU Achievement Numerator": "SD_FSDU_Achievement_Numerator",
+							"SD CTU Achievement Numerator": "SD_CTU_Achievement_Numerator",
+							"SD Shelf Hang Achievement Numerator": "SD_Shelf_Hang_Achievement_Numerator",
+							"Primary Display Achievement Numerator": "Primary_Display_Achievement_Numerator",
+							"Secondary Display Achievement Numerator": "Secondary_Display_Achievement_Numerator",
+							"As_Of_Date": "As_Of_Date"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_svp_brand_report",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_svp_brand_report",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_sftpblob_svp_summary_report",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Year": "Year",
+							"Year_Month": "Year_Month",
+							"Month": "Month",
+							"Country": "Country",
+							"Team": "Team",
+							"Region_Manager": "Region_Manager",
+							"Sales_Rep": "Sales_Rep",
+							"Class": "Class",
+							"Test_Count_Distinct_Rep": "Test_Count_Distinct_Rep",
+							"Test_Count_Distinct_Rep_2": "Test_Count_Distinct_Rep_2",
+							"Visits": "Visits",
+							"Distinct_Visits": "Distinct_Visits",
+							"Target_Pharm": "Target_Pharm",
+							"Pct_Called": "Pct_Called",
+							"Detailed_Visit": "Detailed_Visit",
+							"Pct_Detailed": "Pct_Detailed",
+							"Num_Product_Detailed": "Num_Product_Detailed",
+							"Num_SKU_Audited": "Num_SKU_Audited",
+							"Num_SKU_InStock": "Num_SKU_InStock",
+							"MSL_Compliance": "MSL_Compliance",
+							"Permanent_Vision_Target": "Permanent_Vision_Target",
+							"Permanent_Vision_Score": "Permanent_Vision_Score",
+							"Seasonal_Vision_Target": "Seasonal_Vision_Target",
+							"Seasonal_Vision_Score": "Seasonal_Vision_Score",
+							"Visits_with_Orders": "Visits_with_Orders",
+							"Order_Strike_Rate": "Order_Strike_Rate",
+							"Order_Net_Revenue": "Order_Net_Revenue",
+							"Contracted_Pharm": "Contracted_Pharm",
+							"Visit_On_Contracted": "Visit_On_Contracted",
+							"Total_Visits_YTD": "Total_Visits_YTD",
+							"Called_YTD": "Called_YTD",
+							"Detailed_YTD": "Detailed_YTD",
+							"Visits_On_Contracted": "Visits_On_Contracted",
+							"Visits_YTD_On_Contracted": "Visits_YTD_On_Contracted",
+							"Total_Vision_Stores": "Total_Vision_Stores",
+							"Unique_Customers_Visited_T3M": "Unique_Customers_Visited_T3M",
+							"As_Of_Date": "As_Of_Date"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_svp_summary_report",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_svp_summary_report",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_svp_summary_report",
+				"description": "Copies data from Blob Staging to SQL Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Year": "Year",
+							"Year_Month": "Year_Month",
+							"Month": "Month",
+							"Country": "Country",
+							"Team": "Team",
+							"Region_Manager": "Region_Manager",
+							"Sales_Rep": "Sales_Rep",
+							"Class": "Class",
+							"Test_Count_Distinct_Rep": "Test_Count_Distinct_Rep",
+							"Test_Count_Distinct_Rep_2": "Test_Count_Distinct_Rep_2",
+							"Visits": "Visits",
+							"Distinct_Visits": "Distinct_Visits",
+							"Target_Pharm": "Target_Pharm",
+							"Pct_Called": "Pct_Called",
+							"Detailed_Visit": "Detailed_Visit",
+							"Pct_Detailed": "Pct_Detailed",
+							"Num_Product_Detailed": "Num_Product_Detailed",
+							"Num_SKU_Audited": "Num_SKU_Audited",
+							"Num_SKU_InStock": "Num_SKU_InStock",
+							"MSL_Compliance": "MSL_Compliance",
+							"Permanent_Vision_Target": "Permanent_Vision_Target",
+							"Permanent_Vision_Score": "Permanent_Vision_Score",
+							"Seasonal_Vision_Target": "Seasonal_Vision_Target",
+							"Seasonal_Vision_Score": "Seasonal_Vision_Score",
+							"Visits_with_Orders": "Visits_with_Orders",
+							"Order_Strike_Rate": "Order_Strike_Rate",
+							"Order_Net_Revenue": "Order_Net_Revenue",
+							"Contracted_Pharm": "Contracted_Pharm",
+							"Visit_On_Contracted": "Visit_On_Contracted",
+							"Total_Visits_YTD": "Total_Visits_YTD",
+							"Called_YTD": "Called_YTD",
+							"Detailed_YTD": "Detailed_YTD",
+							"Visits_On_Contracted": "Visits_On_Contracted",
+							"Visits_YTD_On_Contracted": "Visits_YTD_On_Contracted",
+							"Total_Vision_Stores": "Total_Vision_Stores",
+							"Unique_Customers_Visited_T3M": "Unique_Customers_Visited_T3M",
+							"As_Of_Date": "As_Of_Date"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_svp_summary_report",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_svp_summary_report",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "sp_f_call_activity_rep_detail",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_svp_summary_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "svp.sp_f_call_activity_rep_detail"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "sp_f_call_3d_customer",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_svp_brand_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "svp.sp_f_call_3d_customer"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "copy_sftpblob_svp_calls_per_day",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"As_Of_Date": "As_Of_Date",
+							"Year": "Year",
+							"Year_Month": "Year_Month",
+							"Month": "Month",
+							"Country": "Country",
+							"Team": "Team",
+							"Region_Manager": "Region_Manager",
+							"Sales_Rep": "Sales_Rep",
+							"Visits": "Visits",
+							"Days_in_Field": "Days_in_Field",
+							"Calls_Per_Day": "Calls_Per_Day"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_sftp_svp_calls_per_day",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blob_svp_calls_per_day",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blobsql_svp_calls_per_day",
+				"description": "Copies data from Blob Staging to SQL Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Truncate Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Year": "Year",
+							"Year_Month": "Year_Month",
+							"Month": "Month",
+							"Country": "Country",
+							"Team": "Team",
+							"Region_Manager": "Region_Manager",
+							"Sales_Rep": "Sales_Rep",
+							"Visits": "Visits",
+							"Days_in_Field": "Days_in_Field",
+							"Calls_Per_Day": "Calls_Per_Day",
+							"As_Of_Date": "As_Of_Date"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_svp_calls_per_day",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_sqldb_svp_calls_per_day",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "sp_f_call_activity_rep_summary_month",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_svp_calls_per_day",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "svp.sp_f_call_activity_rep_summary_month"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "copy_blob_blobarch_svp_summary_report",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_svp_summary_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_svp_summary_report",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_svp_summary_report",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "copy_blob_blobarch_svp_calls_per_day",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "copy_blobsql_svp_calls_per_day",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_blob_svp_calls_per_day",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_blobarch_svp_calls_per_day",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Truncate Staging",
+				"description": "Stored procedure that truncates Staging tables before loading: svp.sp_truncate_preprocess_staging",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_svp_brand_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_svp_summary_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_svp_calls_per_day",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "svp.sp_truncate_preprocess_staging"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_pulse_sqldb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Delete SFTP",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "copy_sftpblob_svp_brand_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_svp_summary_report",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "copy_sftpblob_svp_calls_per_day",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-01.uksouth.logic.azure.com:443/workflows/0a0bfa1d409446b794c16e0b9f3744f1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=R31wsCJq4-w1UwuV5ohwJIAzOG3oHdrFUHvlhY40z-g",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"deletefolderpath": "/home/data/pulse/svp/weekly"
+					}
+				}
+			},
+			{
+				"name": "Notify Success",
+				"description": "Notify Successful completion of  SVP loads process",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_f_call_activity_rep_detail",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "sp_f_call_activity_rep_summary_month",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "sp_f_call_3d_customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Executed Succesfully"
+					}
+				}
+			},
+			{
+				"name": "Notify Failure",
+				"description": "Notify Failure of SVP loads process",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "sp_f_call_3d_customer",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "sp_f_call_activity_rep_summary_month",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "sp_f_call_activity_rep_detail",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-28.uksouth.logic.azure.com:443/workflows/d2e6ddbbf9884898a8b5cae2d86c8542/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vxaA3PYcfvQ0G396Sezcb6vAbCIq7PzZNgCkzlkVxtk",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "@pipeline().parameters.EmailTo",
+						"StatusMsg": "Pipeline Execution FAILED"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"EmailTo": {
+				"type": "String",
+				"defaultValue": "abalachandran@mycervello.com"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

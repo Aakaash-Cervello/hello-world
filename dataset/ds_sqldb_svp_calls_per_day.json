@@ -1,0 +1,61 @@
+{
+	"name": "ds_sqldb_svp_calls_per_day",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Team",
+				"type": "String"
+			},
+			{
+				"name": "Region_Manager",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Rep",
+				"type": "String"
+			},
+			{
+				"name": "Visits",
+				"type": "String"
+			},
+			{
+				"name": "Days_in_Field",
+				"type": "String"
+			},
+			{
+				"name": "Calls_Per_Day",
+				"type": "String"
+			},
+			{
+				"name": "As_Of_Date",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"tableName": "svp.stg_f_call_activity_rep_summary_month"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

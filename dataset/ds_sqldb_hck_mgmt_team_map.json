@@ -1,0 +1,41 @@
+{
+	"name": "ds_sqldb_hck_mgmt_team_map",
+	"properties": {
+		"description": "LKP_MGMT_TEAM_MAP.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sqldb",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "COUNTRY",
+				"type": "String"
+			},
+			{
+				"name": "BRAND",
+				"type": "String"
+			},
+			{
+				"name": "TEAM",
+				"type": "String"
+			},
+			{
+				"name": "LOAD_DATE",
+				"type": "String"
+			},
+			{
+				"name": "AuditKey",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[hck].[stg_d_mgmt_team_map]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

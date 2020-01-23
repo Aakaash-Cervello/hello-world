@@ -1,0 +1,65 @@
+{
+	"name": "ds_sftp_hck_customer_hier",
+	"properties": {
+		"description": "File: VW_BC_LKPAWS_LKPAWSCUSTHIER.txt\n",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "CUST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PARENT",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER",
+				"type": "String"
+			},
+			{
+				"name": "CUST_LVL7_CODE",
+				"type": "String"
+			},
+			{
+				"name": "LEVEL",
+				"type": "String"
+			},
+			{
+				"name": "ORDER",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_SYNDICATE_KEY",
+				"type": "String"
+			},
+			{
+				"name": "CHANNEL",
+				"type": "String"
+			},
+			{
+				"name": "PO1_CUSTOMER",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_LKPAWS_LKPAWSCUSTHIER.txt",
+			"folderPath": "/home/data/pulse/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,457 @@
+{
+	"name": "adf_supply_staging_dimensions",
+	"properties": {
+		"activities": [
+			{
+				"name": "load staging calendar",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_calendar_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging country",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_country_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging invoice type",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_invoice_type_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load order_status",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_order_status_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging order type",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_order_type_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging reason code",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_reason_code_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load staging supply factory",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_supply_factory_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load_staging_customer",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_customer_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "load_staging_product",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load staging calendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/Staging_external_table/staging_d_product_ext.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateCustomer1",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load_staging_customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/update_staging_d_customer_jde.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateProducts1",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "load_staging_product",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/updating_staging_d_product_jde.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateCustomer2",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "UpdateCustomer1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/update_staging_d_customer_sap.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateProducts2",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "UpdateProducts1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/updating_staging_d_product_sap.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateCustomer3",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "UpdateCustomer2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/update_staging_d_customer_ifcn.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateProducts3",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "UpdateProducts2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/Staging/update_staging_d_product_ifcn.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

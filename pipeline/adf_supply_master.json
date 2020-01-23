@@ -1,0 +1,126 @@
+{
+	"name": "adf_supply_master",
+	"properties": {
+		"activities": [
+			{
+				"name": "Master_Hive_Task",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_hive_master",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "TriggerAAS",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Master_Hive_Task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "adf_supply_trigger_logicapp",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "createupdateprocessedfact",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Master_Hive_Task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "supply/pfr/HSQL/History/history_pfr_fact.HQL",
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ArchiveFiles",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "createupdateprocessedfact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://movedatalakefiles.azurewebsites.net/api/MoveDataLakeFiles?code=CfDJ8AAAAAAAAAAAAAAAAAAAAAC6SZYIP_qvPCk5W58wJs_STjx4yGNejLFg-X9sGZrtRIGB-l8OVl9nruPY3MPawdy6fffm3DF9bqF3Jkbf0SK4s0ldn7-dD7UXY2m7b5_8ukCGI3j7tzv5CxHky3ozeLuNcl07OaG8CKO0KDPST4ZhabIz0SAOppzu7Wn3FzxwaA",
+					"method": "POST",
+					"body": {
+						"AdlAccountName": "weuaztviradlspul01.azuredatalakestore.net",
+						"ClientID": "e6b6c875-9092-4e2e-814f-25cf6c1b5379",
+						"ClientSecret": "6GeQieXMgm+qZIYeGqOxRO8lyBSJmvd4iK/6toZ1+RU=",
+						"Mapping": [
+							{
+								"DestinationFolder": "/rbhealth/archive/supply/",
+								"DoneFileCheck": "false",
+								"FilePattern": "*",
+								"InputFolder": "/rbhealth/landing/supply/sap_source/"
+							},
+							{
+								"DestinationFolder": "/rbhealth/archive/supply/",
+								"DoneFileCheck": "false",
+								"FilePattern": "*",
+								"InputFolder": "/rbhealth/landing/supply/jde_source/"
+							},
+							{
+								"DestinationFolder": "/rbhealth/archive/supply/",
+								"DoneFileCheck": "false",
+								"FilePattern": "*",
+								"InputFolder": "/rbhealth/landing/supply/ifcn_source/"
+							}
+						],
+						"TenantID": "95e66ecc-f2c2-464b-84d9-8fda407bc923"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

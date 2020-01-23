@@ -1,0 +1,26 @@
+{
+	"name": "ds_ITL_DailySales_TO_2018_forward",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulfsprdrbnesa02",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": "ITL_DailySales_TransferOrders.gz",
+				"folderPath": "onedata-platform/landing/JDE/TransferOrders"
+			},
+			"columnDelimiter": "|",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": ""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

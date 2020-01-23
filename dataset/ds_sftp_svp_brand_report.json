@@ -1,0 +1,133 @@
+{
+	"name": "ds_sftp_svp_brand_report",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Year_Month",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Team",
+				"type": "String"
+			},
+			{
+				"name": "Customer_Class",
+				"type": "String"
+			},
+			{
+				"name": "Target_Pharmacies",
+				"type": "String"
+			},
+			{
+				"name": "Num_Detailed_Visits",
+				"type": "String"
+			},
+			{
+				"name": "Num_Products_Detailed",
+				"type": "String"
+			},
+			{
+				"name": "Num_SKU_Audited",
+				"type": "String"
+			},
+			{
+				"name": "Num_SKU_InStock",
+				"type": "String"
+			},
+			{
+				"name": "MSL_Compliance",
+				"type": "String"
+			},
+			{
+				"name": "Customers_With_Orders",
+				"type": "String"
+			},
+			{
+				"name": "Orders_Taken",
+				"type": "String"
+			},
+			{
+				"name": "Order_Net_Revenue",
+				"type": "String"
+			},
+			{
+				"name": "Reps_With_Orders",
+				"type": "String"
+			},
+			{
+				"name": "PD_Brand_Block_Achievement_Numerator",
+				"type": "String"
+			},
+			{
+				"name": "PD_Eye_Level_Achievement_Numerator",
+				"type": "String"
+			},
+			{
+				"name": "PD_Within_Category_Achievement_Numerator",
+				"type": "String"
+			},
+			{
+				"name": "PD_Shelf_Tray_Achievement_Numerator",
+				"type": "String"
+			},
+			{
+				"name": "SD FSDU Achievement Numerator",
+				"type": "String"
+			},
+			{
+				"name": "SD CTU Achievement Numerator",
+				"type": "String"
+			},
+			{
+				"name": "SD Shelf Hang Achievement Numerator",
+				"type": "String"
+			},
+			{
+				"name": "Primary Display Achievement Numerator",
+				"type": "String"
+			},
+			{
+				"name": "Secondary Display Achievement Numerator",
+				"type": "String"
+			},
+			{
+				"name": "As_Of_Date",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"rowDelimiter": "",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "svp_brand_report.csv",
+			"folderPath": "/home/data/pulse/svp/weekly"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

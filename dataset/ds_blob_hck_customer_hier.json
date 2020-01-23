@@ -1,0 +1,27 @@
+{
+	"name": "ds_blob_hck_customer_hier",
+	"properties": {
+		"description": "File: VW_BC_LKPAWS_LKPAWSCUSTHIER.txt",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "hck"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"fileName": "VW_BC_LKPAWS_LKPAWSCUSTHIER.txt",
+			"folderPath": "rbhealth/hck"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

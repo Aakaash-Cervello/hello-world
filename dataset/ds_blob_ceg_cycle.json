@@ -1,0 +1,22 @@
+{
+	"name": "ds_blob_ceg_cycle",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob_mule",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"fileName": {
+				"value": "IQVIA_@{pipeline().parameters.market}_CYCLE_DIMENSIONS_*.txt",
+				"type": "Expression"
+			},
+			"folderPath": "transmission"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

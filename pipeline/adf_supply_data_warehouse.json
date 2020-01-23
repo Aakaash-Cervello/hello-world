@@ -1,0 +1,83 @@
+{
+	"name": "adf_supply_data_warehouse",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExternalTableSQLDW",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "pfr.supply_external_table"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_sqldw_weu_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "PersistentTableSQLDWDim",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "ExternalTableSQLDW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "pfr.supply_persistent_table_dim"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_sqldw_weu_supply",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "PersistentTableSQLDWFact",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "PersistentTableSQLDWDim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "pfr.supply_persistent_table_fact"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_sqldw_weu_supply",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

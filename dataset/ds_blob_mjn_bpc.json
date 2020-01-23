@@ -1,0 +1,23 @@
+{
+	"name": "ds_blob_mjn_bpc",
+	"properties": {
+		"description": "To contain the BPC data moved from sftp to blob staging",
+		"linkedServiceName": {
+			"referenceName": "ls_pulse_blob",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": "|",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": true
+			},
+			"folderPath": "rbhealth/dailysales/mjn/bpc"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

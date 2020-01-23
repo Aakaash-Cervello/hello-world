@@ -1,0 +1,7 @@
+{
+	"name": "IntegrationRuntime-SelfHosted-1fl",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Self Hosted Integration Runtime to access data from SAP Hana"
+	}
+}

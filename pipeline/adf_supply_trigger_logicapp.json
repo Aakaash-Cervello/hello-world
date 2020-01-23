@@ -1,0 +1,28 @@
+{
+	"name": "adf_supply_trigger_logicapp",
+	"properties": {
+		"activities": [
+			{
+				"name": "TriggerLogicAppSupplyAASNew",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-43.westeurope.logic.azure.com:443/workflows/bbd1a49607324845b1890bd4a501b16f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=iyN-u7BhEH1dK6d2hOjKSRCGaDXCVHuyv0C0fmj8Dpk",
+					"method": "POST"
+				}
+			}
+		],
+		"folder": {
+			"name": "Supply"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

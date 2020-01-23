@@ -1,0 +1,406 @@
+{
+	"name": "adf_cegedim_hive_derived_tables",
+	"properties": {
+		"activities": [
+			{
+				"name": "Detailing",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Display",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_detailing.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Display",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_display.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "MSL",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Detailing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_msl.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NPD Audit",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "MSL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_npd_audit_fact.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Order Line Item",
+				"type": "HDInsightHive",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_order_line_item.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Time Off Territory",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Order Line Item",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_time_off_territory.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Vision Store Criteria",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "NPD Audit",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_vision_store_criteria.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Visits",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Time Off Territory",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_f_visits.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@{pipeline().parameters.market}",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Event Dim",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Visits",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_d_exec_event.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"market": {
+							"value": "@pipeline().parameters.market",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "AAS Partitions",
+				"type": "HDInsightHive",
+				"dependsOn": [
+					{
+						"activity": "Event Dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Vision Store Criteria",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"scriptPath": "codebase/RBPulse/Pharmacy_Operational/hive/api/load_derived_tables/load_aas_refresh_partitions.hql",
+					"getDebugInfo": "Always",
+					"defines": {
+						"model": {
+							"value": "@pipeline().parameters.AASModel",
+							"type": "Expression"
+						},
+						"ds": {
+							"value": "@pipeline().parameters.AASDataSource",
+							"type": "Expression"
+						},
+						"market": {
+							"value": "@pipeline().parameters.market",
+							"type": "Expression"
+						}
+					},
+					"scriptLinkedService": {
+						"referenceName": "ls_pulse_blob",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_HDInsight_OD_pharma_reporting",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"market": {
+				"type": "String",
+				"defaultValue": "ITL"
+			},
+			"AASModel": {
+				"type": "String",
+				"defaultValue": "Cegedim"
+			},
+			"AASDataSource": {
+				"type": "String",
+				"defaultValue": "SQLDW_pharma_reporting_iqvia"
+			}
+		},
+		"folder": {
+			"name": "cegedim"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
